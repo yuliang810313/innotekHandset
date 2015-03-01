@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="50dp"
+    android:background="#9FA8DA"
+    android:orientation="vertical" >
+    
+	<Button 
+        android:id="@+id/id_btn_roomview"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1B5E20"
+        android:background="@drawable/corner_button_green"
+        android:text="烘烤技术监管"
+        android:focusable="false"   />
+        
+	<Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+		android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1B5E20"
+        android:text="烘烤业务管理"
+       android:background="@drawable/corner_button_green"
+        android:focusable="false"   />
+            
+	<Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1B5E20"
+        android:background="@drawable/corner_button_green"
+        android:text="烘烤技术资讯"
+        android:layout_marginTop="20dp"
+        android:focusable="false"   />
+                
+	 <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1B5E20"
+        android:text="查询"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corner_button_green"
+        android:focusable="false"   />
+
+</LinearLayout>

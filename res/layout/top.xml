@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="#1B5E20"
+    android:gravity="center"
+    android:orientation="horizontal" >
+    
+    <Button 
+        android:id="@+id/id_top_myroom"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:background="@drawable/corner_button_green"
+        android:text="我的烤房"
+        />
+    <Button 
+        android:id="@+id/id_temp_view"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+        android:background="@drawable/corner_button_green"
+        android:text="温度查看"
+        />
+    <Button
+        android:id="@+id/id_top_alert"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:background="@drawable/corner_button_green"
+        android:text="预警管理"
+        />
+</LinearLayout>

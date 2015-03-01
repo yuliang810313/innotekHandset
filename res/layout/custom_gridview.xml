@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.innotek.handset.CustomGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.innotek.handset.TransparentLayout
+        android:id="@+id/id_tl"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+         /> 
+        
+   <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="8dp"/>
+    
+    <TextView
+        android:id="@+id/msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:gravity="center"
+         />
+   
+     <CheckBox 
+        android:id="@+id/id_checkbox_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:focusable="false"
+        android:enabled="false"
+        android:visibility="gone"
+        android:gravity="right" /> 
+
+   
+    <TextView android:id="@+id/id_current_stage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address"
+        android:paddingLeft="8dp"
+        android:layout_alignParentLeft="true" />
+    
+
+ 
+ </com.innotek.handset.CustomGridView>
+    
+
+
