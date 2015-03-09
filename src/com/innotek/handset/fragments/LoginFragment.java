@@ -24,12 +24,6 @@ public class LoginFragment extends Fragment {
 	private TextView mLoginHint;
 	private Button mLoginButton;
 	
-	@Override
-	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-	}
-	
-	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -59,7 +53,7 @@ public class LoginFragment extends Fragment {
 		});
 		
 		
-		
+		//注册登录状态广播
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("LOGIN_RESULT");
 		getActivity().registerReceiver(loginReceiver, filter);
@@ -83,7 +77,7 @@ public class LoginFragment extends Fragment {
 	
 	
 	
-	//接收LoginService的广播，更新登录状态
+	//接收LoginService广播，更新登录状态
 	private BroadcastReceiver loginReceiver = new BroadcastReceiver(){
 		@Override
 		public void onReceive(Context context, Intent intent){
@@ -103,13 +97,12 @@ public class LoginFragment extends Fragment {
 	};
 	
 	
-	
+	//注销广播
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
 		getActivity().unregisterReceiver(loginReceiver);
 	}
 	
-	//private static final String TAG = "LOGIN_FRAGMENT";
 	private static final String LOGIN_CODE = "loginCode";
 }

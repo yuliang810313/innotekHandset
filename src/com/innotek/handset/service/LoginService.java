@@ -47,12 +47,12 @@ public class LoginService extends IntentService {
 				loginIntent.putExtra(LOGIN_CODE, 200);
 				
 				SharedPreferences pref = this.getSharedPreferences("PREF_USER", MODE_PRIVATE);
-				String user_id = pref.getString("USER_ID", null);
+				String userID = pref.getString("USER_ID", null);
 				
 				DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
 				
 				//使用 SharedPreferences鉴别是否有初始化过数据库, 当user_id == null初始化数据库
-				if(user_id == null){
+				if(userID == null){
 					Log.i(TAG, "初始化拷贝数据库文件");
 					pref.edit().putString("USER_ID", user.getString("_id")).commit();
 					DatabaseAdapter.resetDatabase(this);
@@ -60,7 +60,7 @@ public class LoginService extends IntentService {
 				}else{
 					//已经登录的用户是否和当前用户一致,并且数据库里没有该用户记录
 					
-					if(!user.getString("_id").equals(user_id) && !databaseAdapter.isUserExist(user.getString("_id"))){
+					if(!user.getString("_id").equals(userID) && !databaseAdapter.isUserExist(user.getString("_id"))){
 						Log.i(TAG, "初始化用户数据");
 						pref.edit().clear().commit();
 						pref.edit().putString("USER_ID", user.getString("_id")).commit();
@@ -71,9 +71,9 @@ public class LoginService extends IntentService {
 				
 				
 				//启动应用主界面
-				Intent aItent = new Intent(this, HomeActivity.class);
-				aItent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(aItent);
+				Intent aIntent = new Intent(this, HomeActivity.class);
+				aIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(aIntent);
 					
 			}else
 				//登录失败

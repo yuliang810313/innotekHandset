@@ -1,8 +1,8 @@
 package com.innotek.handset.activities;
 
-import com.innotek.handset.fragments.LoginFragment;
-
 import android.app.Fragment;
+
+import com.innotek.handset.fragments.LoginFragment;
 
 public class LoginActivity extends BaseActivity {
 

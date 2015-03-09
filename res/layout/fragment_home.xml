@@ -2,60 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="50dp"
-    android:background="#9FA8DA"
     android:orientation="vertical" >
     
-	<Button 
-        android:id="@+id/id_btn_roomview"
-        android:layout_width="200dp"
+    <include layout="@layout/home_top"  />
+    <include layout="@layout/user_profile"  />
+    
+    <TextView 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-		android:gravity="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#1B5E20"
-        android:background="@drawable/corner_button_green"
-        android:text="烘烤技术监管"
-        android:focusable="false"   />
-        
-	<Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-		android:gravity="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#1B5E20"
-        android:text="烘烤业务管理"
-       android:background="@drawable/corner_button_green"
-        android:focusable="false"   />
-            
-	<Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-		android:gravity="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#1B5E20"
-        android:background="@drawable/corner_button_green"
-        android:text="烘烤技术资讯"
-        android:layout_marginTop="20dp"
-        android:focusable="false"   />
-                
-	 <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-		android:gravity="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#1B5E20"
-        android:text="查询"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/corner_button_green"
-        android:focusable="false"   />
+        android:textColor="#F5F5F5"
+        android:text="@string/dashbord_menu_desc"/>
 
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+        
+        <Button 
+            android:id="@+id/id_my_rooms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#01579B"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/my_rooms" />
+        
+        <Button 
+            android:id="@+id/id_search_room"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#01579B"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="烘烤技术监管"  />
+        
+    </LinearLayout>
+   
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        
+        <Button 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#01579B"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="烘烤业务管理"
+            />
+        
+        <Button 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#01579B"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="烘烤技术咨询"
+            />
+        
+    </LinearLayout>
+   
 </LinearLayout>

@@ -4,30 +4,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.innotek.handset.R;
-import com.innotek.handset.activities.CurveSettingActivity;
 import com.innotek.handset.entities.Room;
 import com.innotek.handset.utils.CurveLines;
+import com.innotek.handset.utils.DataManager;
 import com.innotek.handset.utils.DatabaseAdapter;
 import com.innotek.handset.utils.JSONUtils;
 
 public class MonitorFragment extends Fragment {
 	
-	
-	
 	private TextView mTitle;
-	
 	private TextView mRoomStatus;
 	private TextView mCurrentStageNumber;
 	private TextView mCurrentStageTime;
@@ -63,18 +65,21 @@ public class MonitorFragment extends Fragment {
 	private TextView mAlert5;
 	private TextView mAlert6;
 	
-	private Button mSettingButton;
+	//private Button mSettingButton;
 	
 	private Bundle bundle;
 	
-	private long curveId;
+	private long mCurveId;
 	private CurveLines curveLines;
 	private DatabaseAdapter dbAdapter;
 	private int currentStageNumber = 0;
 	
+	//private int stageInCurve = 0;
+	
 	private static final int ALERT = 0xFFB71C1C;
 	private static final int NORMAL = 0xFF33691E;
-	static final String TAG = "Monitor Fragment";
+	
+	public static final String TAG = "Monitor Fragment";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,7 +94,7 @@ public class MonitorFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_monitor, container, false);
 		
-		mSettingButton = (Button)view.findViewById(R.id.btn_curve_setting);
+		//mSettingButton = (Button)view.findViewById(R.id.btn_curve_setting);
 		
 		mRoomStatus = (TextView)view.findViewById(R.id.id_room_status);
 		mCurrentStageNumber = (TextView)view.findViewById(R.id.id_stage_no);
@@ -120,12 +125,39 @@ public class MonitorFragment extends Fragment {
 		TextView[] alerts = {mAlert1, mAlert2, mAlert3, mAlert4, mAlert5, mAlert6};
 		
 		
-		mTitle.setText(bundle.getString(RoomsFragment.MID_ADDRESS) + "-" + bundle.getString(RoomsFragment.ROOM_ADDRESS));
+		mTitle.setText("烤房" + bundle.getString("ROOM_NO"));
 
 		
 		curveLines = (CurveLines)view.findViewById(R.id.id_curve);
+
+		curveLines.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				
+		        int mCurrX=0;
+		        int mCurrY=0;
+		        
+		        switch(event.getAction()){
+		        	case MotionEvent.ACTION_DOWN:
+		        		break;
+		        	case MotionEvent.ACTION_UP:
+		        		 v.performClick();
+		        		 mCurrX = (int) event.getX();  
+		        	     mCurrY = (int) event.getY();
+		        	     Log.i("Cutom view" ," touch x: " +  mCurrX  + "and y: " + mCurrY);
+		        	     
+		        	     confirmFireMissiles(mCurrX);
+		        	     break;
+		        	     
+		        };
+		         
+		        v.invalidate();
+				return true;
+			}
+		});
 		
-		
+				
 		dbAdapter.open();
 		Cursor room = dbAdapter.getRoomById(bundle.getString("room_id"));
 		Cursor curve = dbAdapter.getCurveParamsByRoom(room.getString(room.getColumnIndex("id")));
@@ -178,30 +210,70 @@ public class MonitorFragment extends Fragment {
 		mLostAct.setText("失水实际速率: N/A");
 		
 		//设置温湿度控制曲线
-		mSettingButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				setCurveParams(bundle);
-			}
-		});
+//		mSettingButton.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				setCurveParams(bundle);
+//			}
+//		});
 		
 		return view;
 	}
 	
 	
-	private void setCurveParams(Bundle bundle){
-		
-		String midAddress = bundle.getString("midAddress");
-		String address = bundle.getString("roomAddress");
-		
-		Intent intent = new Intent(getActivity(), CurveSettingActivity.class);
-		intent.putExtra("MID_ADDRESS", midAddress);
-		intent.putExtra("ROOM_ADDRESS", address);
-		intent.putExtra("CURVE_ID", curveId);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		
-		startActivity(intent);
+//	private void setCurveParams(Bundle bundle){
+//		
+//		String midAddress = bundle.getString("midAddress");
+//		String address = bundle.getString("roomAddress");
+//		
+//		Intent intent = new Intent(getActivity(), CurveSettingActivity.class);
+//		intent.putExtra("MID_ADDRESS", midAddress);
+//		intent.putExtra("ROOM_ADDRESS", address);
+//		intent.putExtra("CURVE_ID", curveId);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//		
+//		startActivity(intent);
+//	}
+	
+	private void confirmFireMissiles(int pointX) {
+	    DialogFragment newFragment = new CurveSettingsDialogFragment(detecteStage(pointX));
+	    newFragment.show(getFragmentManager(), "missiles");
+	}
+	
+	
+	public int detecteStage(int x){
+		int currentStage = 0;
+		if( x <= 150 && x >= 0){
+			currentStage = 1;
+		}
+		if( x <= 250 && x > 150){
+			currentStage = 2;
+		}
+		if( x <= 350 && x > 250){
+			currentStage = 3;
+		}
+		if( x <= 450 && x > 350){
+			currentStage = 4;
+		}
+		if( x <= 550 && x > 450){
+			currentStage = 5;
+		}
+		if( x <= 650 && x > 550){
+			currentStage = 6;
+		}
+		if( x <= 750 && x > 560){
+			currentStage = 7;
+		}
+		if( x <= 850 && x > 750){
+			currentStage = 8;
+		}
+		if( x <= 950 && x > 850)
+			currentStage = 9;
+		if( x <= 1050 && x > 950)
+			currentStage = 10;
+		//Toast.makeText(getActivity(), "current stage: " + currentStage, Toast.LENGTH_SHORT).show();
+		return currentStage;
 	}
 	
 	//检索出该自控仪温湿度控制曲线，将值传递到曲线绘制类
@@ -234,7 +306,7 @@ public class MonitorFragment extends Fragment {
 				stage = cursor.getInt(cursor.getColumnIndex("stage"));
 				stageAmountTime += durationTimes[counter] + stageTimes[counter];
 				
-				curveId = cursor.getLong(cursor.getColumnIndex("curve_id"));
+				mCurveId = cursor.getLong(cursor.getColumnIndex("curve_id"));
 				counter++;
 				
 			}while(cursor.moveToNext());
@@ -261,7 +333,7 @@ public class MonitorFragment extends Fragment {
 			curveLines.setStageTimes(stageTimes);
 			curveLines.setCurrentStage(currentStageNumber);
 			
-			curveLines.setStyle(0);
+			//curveLines.setStyle(0);
 		}
 	}
 
@@ -273,7 +345,8 @@ public class MonitorFragment extends Fragment {
 		
 		@Override
 		protected Void doInBackground(Void...params){
-			String result = JSONUtils.getInformation(bundle.getString(RoomsFragment.ROOM_ADDRESS), bundle.getString(RoomsFragment.MID_ADDRESS) );
+			String result = JSONUtils.getInformation(bundle.getString(RoomsGridFragment.ROOM_ADDRESS), 
+													 bundle.getString(RoomsGridFragment.MID_ADDRESS) );
 			
 			if(result != null){
 				try{
@@ -309,6 +382,105 @@ public class MonitorFragment extends Fragment {
 		
 		
 	}
+	
+	 private class CurveSettingsDialogFragment extends DialogFragment {
+		 	private int currentStage;
+		 
+		 	private EditText mDry;
+		 	private EditText mWet;
+		 	private EditText mDTime;
+		 	private EditText mSTime;
+		 	private TextView stage;
+		 	
+		 	public CurveSettingsDialogFragment(int pointX){
+			 	this.currentStage = pointX;
+		 	}
+		 
+		 	public void initEditText (View view){
+				mDry = (EditText)view.findViewById(R.id.edit_dry_temperature);
+				mWet = (EditText)view.findViewById(R.id.edit_wet_temperature);
+				mDTime = (EditText)view.findViewById(R.id.edit_duration_time);
+				mSTime = (EditText)view.findViewById(R.id.edit_stage_time);
+				stage  = (TextView) view.findViewById(R.id.id_stage_number);
+		 	}
+		 	
+		 	
+			private void saveCurveParams(){
+				float dry = Float.valueOf(mDry.getText().toString());
+				float wet = Float.valueOf(mWet.getText().toString());
+				int sTime = Integer.valueOf(mSTime.getText().toString());
+				int dTime = Integer.valueOf(mDTime.getText().toString());
+				
+				DataManager curveManager = new DataManager(getActivity());
+				
+				int result = curveManager.modifyCurveParams(dry, wet, sTime, dTime, mCurveId, currentStage);
+				if(result > 0){
+					//Send curve params
+					Log.i(TAG, "Send curve Params to device");
+				}else{
+					
+				}
+			}
+		 	
+	    	@Override
+	        public Dialog onCreateDialog(Bundle savedInstanceState) {
+	            // Use the Builder class for convenient dialog construction
+	            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+	            
+	            LayoutInflater inflater = getActivity().getLayoutInflater();
+	            View view = inflater.inflate(R.layout.curve_form, null);
+	            initEditText(view);
+	            stage.setText(String.valueOf("阶段: " + currentStage));
+	             
+	    		dbAdapter.open();
+	    		
+	    		Cursor data =  dbAdapter.getCurveParamsByStageAndCurve(currentStage, mCurveId);
+	    		dbAdapter.close();
+	    		
+	    		if(data != null){
+	    			float dry;
+	    			float wet;
+	    			int sTime;
+	    			int dTime;
+	    			do{
+	    				dry = data.getFloat(data.getColumnIndex("dry_value"));
+	    				wet = data.getFloat(data.getColumnIndex("wet_value"));
+	    				sTime = data.getInt(data.getColumnIndex("stage_time"));
+	    				dTime = data.getInt(data.getColumnIndex("duration_time"));
+	    				
+	    				
+	    			}while(data.moveToNext());
+	    			mDry.setText(String.valueOf(dry));
+	    			mWet.setText(String.valueOf(wet));
+	    			mSTime.setText(String.valueOf(sTime));
+	    			mDTime.setText(String.valueOf(dTime));
+	    		}
+	            
+	            
+	            builder.setView(view);
+	            
+	            
+	            builder.setMessage(R.string.curve_settings_dialog_title)
+	                   .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+	                       public void onClick(DialogInterface dialog, int id) {
+	                    	   saveCurveParams();
+	                   		dbAdapter.open();
+	                		Cursor room = dbAdapter.getRoomById(bundle.getString("room_id"));
+	                		Cursor curve = dbAdapter.getCurveParamsByRoom(room.getString(room.getColumnIndex("id")));
+	                		dbAdapter.close();
+	                		
+	                		prepareLineDatas(curve);
+	                       }
+	                   })
+	                   .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	                       public void onClick(DialogInterface dialog, int id) {
+	                           // User cancelled the dialog
+	                       }
+	                   });
+	            // Create the AlertDialog object and return it
+	            return builder.create();
+	        }
+	    }
 		
 	
 }

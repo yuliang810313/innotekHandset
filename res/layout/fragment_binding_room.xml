@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical" >
+    
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/binding_room"/>
+    
+    <TextView android:id="@+id/id_binding_result"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"  />
+    
+    <TextView android:id="@+id/id_room_no"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+    
+    <EditText android:id="@+id/id_tobacco_no"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:focusable="false"
+        android:hint="@string/tobacco_no" />
+    
+    <EditText android:id="@+id/id_room_id"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:hint="@string/device_id" />
+	
+    <Button android:id="@+id/id_fire_btn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:text="@string/fire"/>
+    
+</LinearLayout>

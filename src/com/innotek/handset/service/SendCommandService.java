@@ -6,11 +6,11 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.innotek.handset.utils.JSONUtils;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
+
+import com.innotek.handset.utils.JSONUtils;
 
 public class SendCommandService extends IntentService {
 	public static final String COMMAND_URL = "http://223.4.21.219:8080/commands";

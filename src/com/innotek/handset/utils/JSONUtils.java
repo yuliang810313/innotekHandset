@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.innotek.handset.entities.CurveParams;
+import com.innotek.handset.entities.PreferRoom;
 import com.innotek.handset.entities.Room;
 import com.innotek.handset.entities.State;
 import com.innotek.handset.entities.Station;
@@ -136,50 +137,7 @@ public class JSONUtils {
 				JSONObject jObj = new JSONObject(results);
 				JSONArray array = jObj.getJSONArray("rooms");
 				for(int i = 0 ; i < array.length(); i++){
-					JSONObject jObject = array.getJSONObject(i);
-					JSONArray a = jObject.getJSONArray("status");
-				
-					int [] datas = new int[a.length()];
-					for(int j = 0; j < a.length(); j++){
-						datas[j] = a.getInt(j);
-					}
-					
-					int infoType = jObject.getInt("infoType");
-					
-					String [] status = Room.getMsgsContent(infoType, datas);
-					Log.i(TAG,"Status: " + Arrays.toString(status));
-					
-					Room room = new Room();	
-					
-					switch(infoType){
-					case 0:
-						
-						room.setId(jObject.getString("_id"));
-						room.setInfoType(jObject.getInt("infoType"));
-						room.setAddress(jObject.getString("address"));
-						room.setMidAddress(jObject.getString("midAddress"));
-						room.setUpdatedAt(jObject.getString("updatedAt"));
-						room.setDryAct(Float.parseFloat(status[0]));
-						room.setWetAct(Float.parseFloat(status[1]));
-						room.setStatus(Arrays.toString(status));
-						room.setStation_id(stationId);
-						break;
-					case 2:
-							
-						room.setId(jObject.getString("_id"));
-						room.setInfoType(jObject.getInt("infoType"));
-						room.setAddress(jObject.getString("address"));
-						room.setMidAddress(jObject.getString("midAddress"));
-						room.setUpdatedAt(jObject.getString("updatedAt"));
-						room.setDryTarget(Float.parseFloat(status[0]));
-						room.setDryAct(Float.parseFloat(status[2]));
-						room.setWetAct(Float.parseFloat(status[3]));
-						room.setWetTarget(Float.parseFloat(status[1]));
-						room.setAmount(Float.parseFloat(status[4]));
-						room.setStatus(Arrays.toString(status));
-						room.setStation_id(stationId);
-						break;
-					};
+					Room room = createRoom(array.getJSONObject(i));
 					
 					list.add(room);
 				}
@@ -190,6 +148,60 @@ public class JSONUtils {
 		Log.i(TAG, "The result is " + list);
 		return list;
 	}
+	
+	public static Room createRoom(JSONObject jObject){
+		//JSONObject jObject = array.getJSONObject(i);
+		Room room = new Room();	
+		try{
+			JSONArray a = jObject.getJSONArray("status");
+		
+			int [] datas = new int[a.length()];
+			for(int j = 0; j < a.length(); j++){
+				datas[j] = a.getInt(j);
+			}
+		
+			int infoType = jObject.getInt("infoType");
+		
+			String [] status = Room.getMsgsContent(infoType, datas);
+			Log.i(TAG,"Status: " + Arrays.toString(status));
+		
+			
+		
+			switch(infoType){
+			case 0:
+			
+				room.setId(jObject.getString("_id"));
+				room.setInfoType(jObject.getInt("infoType"));
+				room.setAddress(jObject.getString("address"));
+				room.setMidAddress(jObject.getString("midAddress"));
+				room.setUpdatedAt(jObject.getString("updatedAt"));
+				room.setDryAct(Float.parseFloat(status[0]));
+				room.setWetAct(Float.parseFloat(status[1]));
+				room.setStatus(Arrays.toString(status));
+				//room.setStation_id(stationId);
+				break;
+			case 2:
+				
+				room.setId(jObject.getString("_id"));
+				room.setInfoType(jObject.getInt("infoType"));
+				room.setAddress(jObject.getString("address"));
+				room.setMidAddress(jObject.getString("midAddress"));
+				room.setUpdatedAt(jObject.getString("updatedAt"));
+				room.setDryTarget(Float.parseFloat(status[0]));
+				room.setDryAct(Float.parseFloat(status[2]));
+				room.setWetAct(Float.parseFloat(status[3]));
+				room.setWetTarget(Float.parseFloat(status[1]));
+				room.setAmount(Float.parseFloat(status[4]));
+				room.setStatus(Arrays.toString(status));
+				//room.setStation_id(stationId);
+				break;
+			};
+		}catch(JSONException e){
+			e.printStackTrace();	
+		}
+		return room;
+	}
+	
 	
 	public static ArrayList<CurveParams> getCurveByRoom(Room room){
 		ArrayList<CurveParams> list = new ArrayList<CurveParams>();
@@ -245,8 +257,44 @@ public class JSONUtils {
 		return list;
 	}
 	
+	//获取用户偏好烤房
+	public static ArrayList<PreferRoom> getPreferRooms(String userID){
+		ArrayList<PreferRoom> list = new ArrayList<PreferRoom>();
+		String result = getJSON("https://223.4.21.219:8080/users/" + userID + "/prefers");
+		if(result != null){
+			try{
+				JSONObject results = new JSONObject(result);
+				JSONArray prefers = results.getJSONArray("prefers");
+				for(int i = 0; i < prefers.length(); i++){
+					JSONObject object = prefers.getJSONObject(i);
+					PreferRoom room = new PreferRoom();
+					room.setUserId(userID);
+					room.setRoomNo(object.getString("room_no"));
+					room.setTobaccoNo(object.getString("tobacco_no"));
+					room.setRoomUser(object.getString("room_user"));
+					room.setRoomType(object.getString("room_type"));
+					room.setFanType(object.getString("fan_type"));
+					room.setHeatingEquipment(object.getString("heating_equipment"));
+					room.setPersonInCharge(object.getString("person_in_charge"));
+					room.setPhone(object.getString("phone"));
+					room.setRoomID(object.getString("room_id"));
+					
+					list.add(room);
+				}
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	
 	public static String getInformation(String address, String midAddress){
 		return JSONUtils.getJSON("http://223.4.21.219:8080/informations/" + address + "/" + midAddress);
+	}
+	
+	public static String getRoomById(String roomID){
+		return JSONUtils.getJSON("http://223.4.21.219:8080/rooms/" + roomID);
 	}
 	
 	private static final String TAG = "JSON_UTIL";

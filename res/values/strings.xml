@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">iAssistant</string>
+    <string name="app_name">烟叶烘烤监管</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
-	<string name="login_title">Innotek 烘烤技术管理</string>
+    <string name="login_welcome">welcome to</string>
+	<string name="login_title">Innotek 烟叶烘烤监管</string>
 	<string name="user_id">用户名*</string>
 	<string name="password">密码*</string>
 	<string name="login">登录</string>
 	<string name="room_status">"偏温  缺相  过载"</string>
+	<string name="login_user_id">用户名</string>
+	<string name="login_password">密码</string>
+	<string name="copyright">Copyright 长沙瑞和数码科技</string>
+	<string name="dashbord_menu_desc">test</string>
+	
+	<!-- Home Activity -->
+	<string name="search_room">烤房查询</string>
+	<string name="my_rooms">我的烤房</string>
+	
+	<!--  MyRooms Activity -->
+	<string name="message_empty_layout_changes">还未创建烤房.</string>
+	<string name="action_add_item">添加烤房</string>
+	
+	<!-- New Room form  -->
+	<string name="room_no">烤房编号</string>
+	<string name="tobacco_no">烟基号</string>
+	<string name="room_type">烤房类型</string>
+	<string name="fan_type">风机型号</string>
+	<string name="heating_equipment">升温设备</string>
+	<string name="person_in_charge">负责人</string>    
+	<string name="room_user">使用人</string>
+	<string name="phone">电话</string>
+	
+	<!-- Binding room -->    
+	<string name="binding_room">烤房匹配</string>
+	<string name="device_id">自控仪ID</string> 
+	<string name="dialog_fire_binding">确定绑定?</string>
+	
+	<string name="rooms_count_normal">正常状态烤房统计</string>
+	<string name="rooms_count_alert">警报状态烤房统计</string>
+	
 	
 	<string name="hint_dry_temperature">干球目标温度</string>
 	<string name="hint_wet_temperature">湿球目标温度</string>
@@ -29,6 +61,7 @@
     <string name="action_finish">Finish</string>
     
     <string name="fire">确定</string>
-    <string name="dialog_fire_missiles">保存并发送曲线参数？</string>
+    <string name="curve_settings_dialog_title">设置曲线参数</string>
+    <string name="dialog_fire_missiles">确认保存?</string>
     <string name="cancel">退出</string>
 </resources>

@@ -14,10 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.innotek.handset.R;
-import com.innotek.handset.utils.CurveManager;
+import com.innotek.handset.utils.DataManager;
 import com.innotek.handset.utils.DatabaseAdapter;
 
 
@@ -52,7 +51,7 @@ public class CurveSettingFragment extends Fragment{
 		int sTime = Integer.valueOf(mSTime.getText().toString());
 		int dTime = Integer.valueOf(mDTime.getText().toString());
 		
-		CurveManager curveManager = new CurveManager(getActivity());
+		DataManager curveManager = new DataManager(getActivity());
 		
 		int result = curveManager.modifyCurveParams(dry, wet, sTime, dTime, mCurveId, j);
 		if(result > 0){

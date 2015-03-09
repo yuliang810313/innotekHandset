@@ -17,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.innotek.handset.R;
-import com.innotek.handset.activities.RoomsActivity;
+import com.innotek.handset.activities.RoomsGridActivity;
 import com.innotek.handset.entities.Station;
 import com.innotek.handset.utils.DatabaseAdapter;
 import com.innotek.handset.utils.SQLiteCursorLoader;
@@ -45,7 +45,7 @@ public class StationFragment extends ListFragment implements LoaderCallbacks<Cur
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_station, container, false);
+		View view = inflater.inflate(R.layout.fragment_listview, container, false);
 				
 		return view;
 	}
@@ -56,7 +56,7 @@ public class StationFragment extends ListFragment implements LoaderCallbacks<Cur
 
 		Station station = (Station)getListAdapter().getItem(position);
 				
-		Intent intent = new Intent(getActivity(), RoomsActivity.class);
+		Intent intent = new Intent(getActivity(), RoomsGridActivity.class);
 		intent.putExtra("STATION_ID", station.getId());
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		getActivity().startActivity(intent);

@@ -7,7 +7,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
-    android:background="#9FA8DA"
+    android:background="#EEEEEE"
     android:orientation="vertical" >
     
     <LinearLayout android:layout_width="match_parent"
@@ -21,6 +21,7 @@
         	android:id="@+id/id_title"
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
+        	android:gravity="center"
         	android:textStyle="bold" />
    		
     	<TextView android:layout_width="match_parent"
@@ -164,12 +165,14 @@
    		 </LinearLayout>
     </LinearLayout>
 
-            <TextView android:layout_width="match_parent"
-    	    android:layout_height="wrap_content"
-    	    android:textStyle="bold"
-    	        	    android:layout_marginTop="5dp"
-    	    android:layout_marginBottom="5dp"
-    	    android:text="烘烤曲线"/>
+    <TextView 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:textStyle="bold"
+    	android:layout_marginTop="5dp"
+    	android:layout_marginBottom="5dp"
+    	android:text="烘烤曲线"/>
+    
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -177,12 +180,12 @@
         android:background="#FFFFFF"
         android:orientation="vertical">
        		
-         <Button 
+        <!--  <Button 
        		  android:id="@+id/btn_curve_setting"
        		  android:layout_width="match_parent"
       		  android:layout_height="wrap_content"
        		  android:text="@string/curve_setting" /> 
-       		  
+       		   -->
 
          <com.innotek.handset.utils.CurveLines 
               android:id="@+id/id_curve"

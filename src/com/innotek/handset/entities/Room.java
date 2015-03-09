@@ -22,7 +22,8 @@ public class Room {
 	private int[] data;
 	private int currentStage;
 	
-	
+	private String tobaccoNo;
+	private String roomNo;
 	
 	public int getCurrentStage() {
 		return currentStage;
@@ -188,4 +189,22 @@ public class Room {
 		
 		return contents;
 	}
+
+	public String getTobaccoNo() {
+		return tobaccoNo;
+	}
+
+	public void setTobaccoNo(String tobaccoNo) {
+		this.tobaccoNo = tobaccoNo;
+	}
+
+	public String getRoomNo() {
+		return roomNo;
+	}
+
+	public void setRoomNo(String roomNo) {
+		this.roomNo = roomNo;
+	}
+	
+	
 }

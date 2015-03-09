@@ -16,7 +16,7 @@
 	
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_launcher_b"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
@@ -37,29 +37,58 @@
         </activity>
         
         <activity
-            android:name="com.innotek.handset.activities.MainActivity"
+            android:name="com.innotek.handset.activities.StatesListActivity"
             android:launchMode="singleTop"
             android:parentActivityName="com.innotek.handset.activities.HomeActivity"
             android:screenOrientation="portrait" >
         </activity>
         
+        
+        <activity 
+            android:name="com.innotek.handset.activities.MyRoomsActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="com.innotek.handset.activities.HomeActivity"
+            android:screenOrientation="portrait">    
+        </activity>
+        
+        <activity 
+            android:name="com.innotek.handset.activities.NewRoomActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="com.innotek.handset.activities.MyRoomsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        
+        <activity 
+            android:name="com.innotek.handset.activities.BindingRoomActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="com.innotek.handset.activities.NewRoomActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        
+        <activity 
+            android:name="com.innotek.handset.activities.ModifyPreferRoomActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="com.innotek.handset.activities.PreferListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        
         <activity
             android:name="com.innotek.handset.activities.PreferListActivity"
             android:launchMode="singleTop"
-            android:parentActivityName="com.innotek.handset.activities.HomeActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName="com.innotek.handset.activities.MyRoomsActivity"
+            android:screenOrientation="portrait"  >
         </activity>
         
         
         <activity
             android:name="com.innotek.handset.activities.StationActivity"
             android:launchMode="singleTop"
-            android:parentActivityName="com.innotek.handset.activities.MainActivity"
+            android:parentActivityName="com.innotek.handset.activities.StatesListActivity"
             android:screenOrientation="portrait" >
         </activity>
         
         <activity
-            android:name="com.innotek.handset.activities.RoomsActivity"
+            android:name="com.innotek.handset.activities.RoomsGridActivity"
             android:launchMode="singleTop"
             android:parentActivityName="com.innotek.handset.activities.StationActivity"
             android:screenOrientation="portrait" >
@@ -67,7 +96,7 @@
         
         <activity
             android:name="com.innotek.handset.activities.MonitorActivity"
-            android:parentActivityName="com.innotek.handset.activities.RoomsActivity"
+            android:parentActivityName="com.innotek.handset.activities.MyRoomsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:label="@string/app_name">

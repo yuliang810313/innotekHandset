@@ -8,7 +8,13 @@
 package com.innotek.handset;
 
 public final class R {
+    public static final class anim {
+        public static final int hyperspace_jump=0x7f040000;
+    }
     public static final class attr {
+    }
+    public static final class color {
+        public static final int actionbar_background=0x7f090000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -18,23 +24,35 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int corner_button_gray=0x7f020000;
-        public static final int corner_button_green=0x7f020001;
-        public static final int ic_action_select_all=0x7f020002;
-        public static final int ic_action_settings=0x7f020003;
-        public static final int ic_action_star=0x7f020004;
-        public static final int ic_flow_chart_50=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int ic_like_outline_50=0x7f020007;
-        public static final int ic_line_chart_50=0x7f020008;
+        public static final int avatar=0x7f020000;
+        public static final int border=0x7f020001;
+        public static final int corner_button_gray=0x7f020002;
+        public static final int corner_button_green=0x7f020003;
+        public static final int ic_action_edit=0x7f020004;
+        public static final int ic_action_info=0x7f020005;
+        public static final int ic_action_new=0x7f020006;
+        public static final int ic_action_overflow=0x7f020007;
+        public static final int ic_action_photo=0x7f020008;
+        public static final int ic_action_refresh=0x7f020009;
+        public static final int ic_action_select_all=0x7f02000a;
+        public static final int ic_action_send=0x7f02000b;
+        public static final int ic_action_settings=0x7f02000c;
+        public static final int ic_action_star=0x7f02000d;
+        public static final int ic_flow_chart_50=0x7f02000e;
+        public static final int ic_launcher=0x7f02000f;
+        public static final int ic_launcher_b=0x7f020010;
+        public static final int ic_like_outline_50=0x7f020011;
+        public static final int ic_line_chart_50=0x7f020012;
+        public static final int ic_list_remove=0x7f020013;
     }
     public static final class id {
-        public static final int action_flip=0x7f050001;
-        public static final int action_logout=0x7f05003e;
+        public static final int action_add_item=0x7f060049;
+        public static final int action_flip=0x7f060001;
+        public static final int action_logout=0x7f060048;
         /** 
         These action bar item IDs (menu item IDs) are defined here for
         programmatic use. Normally, IDs are created using the "@+id/foo"
@@ -43,130 +61,173 @@ public final class R {
         are defined here.
     
          */
-        public static final int action_next=0x7f050000;
-        public static final int action_previous=0x7f05003c;
-        public static final int action_settings=0x7f05003d;
-        public static final int address=0x7f05000d;
-        public static final int btn_curve_setting=0x7f05002d;
-        public static final int btn_login=0x7f050017;
-        public static final int container=0x7f050007;
-        public static final int edit_dry_temperature=0x7f050008;
-        public static final int edit_duration_time=0x7f05000b;
-        public static final int edit_password=0x7f050016;
-        public static final int edit_stage_time=0x7f05000a;
-        public static final int edit_user_id=0x7f050014;
-        public static final int edit_wet_temperature=0x7f050009;
-        public static final int grid_rooms=0x7f05002f;
-        public static final int id_actions=0x7f050036;
-        public static final int id_actions_image=0x7f050035;
-        public static final int id_alert_1=0x7f050024;
-        public static final int id_alert_2=0x7f05002a;
-        public static final int id_alert_3=0x7f050025;
-        public static final int id_alert_4=0x7f05002b;
-        public static final int id_alert_5=0x7f050026;
-        public static final int id_alert_6=0x7f05002c;
-        public static final int id_bottom_add_room=0x7f050005;
-        public static final int id_bottom_back=0x7f050006;
-        public static final int id_bottom_new_factory=0x7f050004;
-        public static final int id_btn_roomview=0x7f050011;
-        public static final int id_btn_save=0x7f050031;
-        public static final int id_checkbox_grid=0x7f05000f;
-        public static final int id_current_stage=0x7f050010;
-        public static final int id_curve=0x7f05002e;
-        public static final int id_custom_grid=0x7f050002;
-        public static final int id_dry_act=0x7f050027;
-        public static final int id_dry_target=0x7f050021;
-        public static final int id_layout_action_bottom=0x7f050030;
-        public static final int id_lost_speed_act=0x7f050029;
-        public static final int id_lost_speed_target=0x7f050023;
-        public static final int id_pager_content=0x7f050032;
-        public static final int id_room_stage_time=0x7f05001c;
-        public static final int id_room_status=0x7f05001b;
-        public static final int id_room_total_time=0x7f05001d;
-        public static final int id_roomlist_title=0x7f050038;
-        public static final int id_save_btn=0x7f050034;
-        public static final int id_stage_no=0x7f05001f;
-        public static final int id_stage_number=0x7f050033;
-        public static final int id_state_name=0x7f050037;
-        public static final int id_temp_view=0x7f05003a;
-        public static final int id_time=0x7f05001e;
-        public static final int id_title=0x7f05001a;
-        public static final int id_tl=0x7f05000c;
-        public static final int id_tobacco_count=0x7f050020;
-        public static final int id_top_alert=0x7f05003b;
-        public static final int id_top_myroom=0x7f050039;
-        public static final int id_version=0x7f050019;
-        public static final int id_wet_act=0x7f050028;
-        public static final int id_wet_target=0x7f050022;
-        public static final int label_password=0x7f050015;
-        public static final int label_user_id=0x7f050013;
-        public static final int login_hint=0x7f050018;
-        public static final int login_title=0x7f050012;
-        public static final int msg=0x7f05000e;
-        public static final int pager=0x7f050003;
+        public static final int action_next=0x7f060000;
+        public static final int action_previous=0x7f060046;
+        public static final int action_settings=0x7f060047;
+        public static final int btn_login=0x7f06001b;
+        public static final int container=0x7f060007;
+        public static final int edit_dry_temperature=0x7f060009;
+        public static final int edit_duration_time=0x7f06000c;
+        public static final int edit_password=0x7f06001a;
+        public static final int edit_stage_time=0x7f06000b;
+        public static final int edit_user_id=0x7f060019;
+        public static final int edit_wet_temperature=0x7f06000a;
+        public static final int grid_rooms=0x7f060030;
+        public static final int id_alert_1=0x7f060026;
+        public static final int id_alert_2=0x7f06002c;
+        public static final int id_alert_3=0x7f060027;
+        public static final int id_alert_4=0x7f06002d;
+        public static final int id_alert_5=0x7f060028;
+        public static final int id_alert_6=0x7f06002e;
+        public static final int id_alert_rooms=0x7f06003f;
+        public static final int id_binding_result=0x7f060012;
+        public static final int id_binding_status=0x7f06003d;
+        public static final int id_bottom_add_room=0x7f060005;
+        public static final int id_bottom_back=0x7f060006;
+        public static final int id_bottom_new_factory=0x7f060004;
+        public static final int id_checkbox_prefer=0x7f06000e;
+        public static final int id_curve=0x7f06002f;
+        public static final int id_custom_grid=0x7f060002;
+        public static final int id_dry_act=0x7f060029;
+        public static final int id_dry_target=0x7f060023;
+        public static final int id_fan_type=0x7f060032;
+        public static final int id_fire_btn=0x7f060015;
+        public static final int id_heating_equipment=0x7f060033;
+        public static final int id_lost_speed_act=0x7f06002b;
+        public static final int id_lost_speed_target=0x7f060025;
+        public static final int id_my_rooms=0x7f060016;
+        public static final int id_normal_rooms=0x7f06003e;
+        public static final int id_pager_content=0x7f060039;
+        public static final int id_person_in_charge=0x7f060034;
+        public static final int id_phone=0x7f060036;
+        public static final int id_reset=0x7f060037;
+        public static final int id_room_code=0x7f06000f;
+        public static final int id_room_id=0x7f06000d;
+        public static final int id_room_no=0x7f060013;
+        public static final int id_room_stage=0x7f060011;
+        public static final int id_room_stage_time=0x7f06001e;
+        public static final int id_room_status=0x7f060010;
+        public static final int id_room_total_time=0x7f06001f;
+        public static final int id_room_type=0x7f060031;
+        public static final int id_room_user=0x7f060035;
+        public static final int id_roomlist_title=0x7f06003c;
+        public static final int id_save=0x7f060038;
+        public static final int id_save_btn=0x7f06003a;
+        public static final int id_search_room=0x7f060017;
+        public static final int id_stage_no=0x7f060021;
+        public static final int id_stage_number=0x7f060008;
+        public static final int id_state_name=0x7f06003b;
+        public static final int id_temp_view=0x7f060041;
+        public static final int id_time=0x7f060020;
+        public static final int id_title=0x7f06001d;
+        public static final int id_tobacco_count=0x7f060022;
+        public static final int id_tobacco_no=0x7f060014;
+        public static final int id_top_alert=0x7f060042;
+        public static final int id_top_myroom=0x7f060040;
+        public static final int id_user_avatar=0x7f060043;
+        public static final int id_user_last_login=0x7f060045;
+        public static final int id_user_title=0x7f060044;
+        public static final int id_version=0x7f06001c;
+        public static final int id_wet_act=0x7f06002a;
+        public static final int id_wet_target=0x7f060024;
+        public static final int login_hint=0x7f060018;
+        public static final int pager=0x7f060003;
     }
     public static final class layout {
         public static final int activity_screen_slide=0x7f030000;
         public static final int bottom=0x7f030001;
         public static final int container=0x7f030002;
         public static final int curve_form=0x7f030003;
-        public static final int custom_gridview=0x7f030004;
-        public static final int fragment_curve=0x7f030005;
-        public static final int fragment_home=0x7f030006;
-        public static final int fragment_listview=0x7f030007;
-        public static final int fragment_login=0x7f030008;
-        public static final int fragment_main=0x7f030009;
+        public static final int custom_grid_item=0x7f030004;
+        public static final int fragment_binding_room=0x7f030005;
+        public static final int fragment_curve=0x7f030006;
+        public static final int fragment_home=0x7f030007;
+        public static final int fragment_listview=0x7f030008;
+        public static final int fragment_login=0x7f030009;
         public static final int fragment_monitor=0x7f03000a;
-        public static final int fragment_rooms=0x7f03000b;
-        public static final int fragment_scrollview_curve_params=0x7f03000c;
-        public static final int fragment_station=0x7f03000d;
-        public static final int home_list_item=0x7f03000e;
-        public static final int list_curve_params=0x7f03000f;
-        public static final int list_state_textview=0x7f030010;
-        public static final int list_with_textview=0x7f030011;
-        public static final int top=0x7f030012;
+        public static final int fragment_my_rooms=0x7f03000b;
+        public static final int fragment_new_room=0x7f03000c;
+        public static final int fragment_rooms=0x7f03000d;
+        public static final int fragment_scrollview_curve_params=0x7f03000e;
+        public static final int fragment_state=0x7f03000f;
+        public static final int fragment_station=0x7f030010;
+        public static final int home_top=0x7f030011;
+        public static final int list_curve_params=0x7f030012;
+        public static final int list_state_textview=0x7f030013;
+        public static final int list_with_textview=0x7f030014;
+        public static final int prefer_list_item=0x7f030015;
+        public static final int rooms_count=0x7f030016;
+        public static final int top=0x7f030017;
+        public static final int user_profile=0x7f030018;
     }
     public static final class menu {
-        public static final int activity_screen_slide=0x7f080000;
-        public static final int menu=0x7f080001;
+        public static final int activity_screen_slide=0x7f0a0000;
+        public static final int menu=0x7f0a0001;
+        public static final int menu_add_room=0x7f0a0002;
     }
     public static final class string {
-        public static final int action_finish=0x7f060015;
-        public static final int action_logout=0x7f060002;
-        public static final int action_next=0x7f060014;
-        public static final int action_previous=0x7f060013;
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int cancel=0x7f060018;
-        public static final int curve_setting=0x7f06000e;
-        public static final int dialog_fire_missiles=0x7f060017;
-        public static final int draw_btn=0x7f06000d;
-        public static final int fire=0x7f060016;
-        public static final int hint_dry_temperature=0x7f060008;
-        public static final int hint_duration_time=0x7f06000b;
-        public static final int hint_stage_time=0x7f06000a;
-        public static final int hint_wet_temperature=0x7f060009;
-        public static final int login=0x7f060006;
-        public static final int login_title=0x7f060003;
-        public static final int password=0x7f060005;
-        public static final int reset_btn=0x7f06000f;
-        public static final int room_status=0x7f060007;
-        public static final int save_btn=0x7f06000c;
-        public static final int tab_curve_list=0x7f060011;
-        public static final int tab_curve_view=0x7f060012;
-        public static final int tab_setting=0x7f060010;
-        public static final int user_id=0x7f060004;
+        public static final int action_add_item=0x7f070010;
+        public static final int action_finish=0x7f07002b;
+        public static final int action_logout=0x7f070002;
+        public static final int action_next=0x7f07002a;
+        public static final int action_previous=0x7f070029;
+        public static final int action_settings=0x7f070001;
+        public static final int app_name=0x7f070000;
+        /**  Binding room 
+         */
+        public static final int binding_room=0x7f070019;
+        public static final int cancel=0x7f07002f;
+        public static final int copyright=0x7f07000b;
+        public static final int curve_setting=0x7f070024;
+        public static final int curve_settings_dialog_title=0x7f07002d;
+        public static final int dashbord_menu_desc=0x7f07000c;
+        public static final int device_id=0x7f07001a;
+        public static final int dialog_fire_binding=0x7f07001b;
+        public static final int dialog_fire_missiles=0x7f07002e;
+        public static final int draw_btn=0x7f070023;
+        public static final int fan_type=0x7f070014;
+        public static final int fire=0x7f07002c;
+        public static final int heating_equipment=0x7f070015;
+        public static final int hint_dry_temperature=0x7f07001e;
+        public static final int hint_duration_time=0x7f070021;
+        public static final int hint_stage_time=0x7f070020;
+        public static final int hint_wet_temperature=0x7f07001f;
+        public static final int login=0x7f070007;
+        public static final int login_password=0x7f07000a;
+        public static final int login_title=0x7f070004;
+        public static final int login_user_id=0x7f070009;
+        public static final int login_welcome=0x7f070003;
+        /**   MyRooms Activity 
+         */
+        public static final int message_empty_layout_changes=0x7f07000f;
+        public static final int my_rooms=0x7f07000e;
+        public static final int password=0x7f070006;
+        public static final int person_in_charge=0x7f070016;
+        public static final int phone=0x7f070018;
+        public static final int reset_btn=0x7f070025;
+        /**  New Room form  
+         */
+        public static final int room_no=0x7f070011;
+        public static final int room_status=0x7f070008;
+        public static final int room_type=0x7f070013;
+        public static final int room_user=0x7f070017;
+        public static final int rooms_count_alert=0x7f07001d;
+        public static final int rooms_count_normal=0x7f07001c;
+        public static final int save_btn=0x7f070022;
+        /**  Home Activity 
+         */
+        public static final int search_room=0x7f07000d;
+        public static final int tab_curve_list=0x7f070027;
+        public static final int tab_curve_view=0x7f070028;
+        public static final int tab_setting=0x7f070026;
+        public static final int tobacco_no=0x7f070012;
+        public static final int user_id=0x7f070005;
     }
     public static final class style {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
@@ -179,10 +240,13 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f080001;
+        /**  ActionBar styles 
+         */
+        public static final int MyActionBar=0x7f080002;
+        public static final int RoomForm=0x7f080003;
     }
 }

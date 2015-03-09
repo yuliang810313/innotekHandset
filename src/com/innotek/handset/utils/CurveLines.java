@@ -2,10 +2,11 @@ package com.innotek.handset.utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 
@@ -16,7 +17,7 @@ public class CurveLines extends View {
 	private int[] stageTimes;
 	private int[] durationTimes;
 	private int currentStage;
-	private int style;
+	//private int style;
 	
 	private Paint paint;
 	private Paint rectPaint;
@@ -46,9 +47,9 @@ public class CurveLines extends View {
 		this.drys = drys;
 	}
 	
-	public void setStyle(int style){
-		this.style = style;
-	}
+//	public void setStyle(int style){
+//		this.style = style;
+//	}
 	
 	public int[] createTimes(){
 		
