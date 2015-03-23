@@ -13,21 +13,39 @@ public class CommandInformation {
 	private String address;
 	
 	private static final String TAG = "CommandInformation";
+	private String times;
 	
+	
+	
+	public String getTimes() {
+		return times;
+	}
+
+	public void setTimes(String times) {
+		this.times = times;
+	}
+
 	public CommandInformation(String midAddress, String address){
 		this.midAddress = midAddress;
 		this.address = address;
 	}
 	
 	public void createCommandInformation(Cursor c, int stage){
-
+		times = "";
 		do{
 			drys += c.getFloat(c.getColumnIndex("dry_value")) + ",";
 			wets += c.getFloat(c.getColumnIndex("wet_value")) + ",";
-			sTimes += c.getInt(c.getColumnIndex("stage_time")) + ",";
-			dTimes += c.getInt(c.getColumnIndex("duration_time")) + ",";
+			dTimes = c.getInt(c.getColumnIndex("duration_time")) + ",";
+			times += dTimes;
+			
+			if(c.getInt(c.getColumnIndex("stage_time")) != 0){
+				sTimes = c.getInt(c.getColumnIndex("stage_time")) + ",";
+				times += sTimes;
+			}
+			
+			
 		}while(c.moveToNext());
-		Log.i(TAG, drys);
+		Log.i(TAG, times);
 	}
 
 	public String getMidAddress() {

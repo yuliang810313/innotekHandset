@@ -3,8 +3,18 @@
     	android:id="@+id/id_pager_content"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical" >
-        
+
+                  
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            
     		<TextView 
     		    android:id="@+id/id_stage_number"
     		    android:layout_width="match_parent"
@@ -14,37 +24,121 @@
     		    android:layout_gravity="center"
     		    android:gravity="center"
     		    style="?android:textAppearanceMedium" />
-    
-            <EditText
-               android:id="@+id/edit_dry_temperature"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:hint="@string/hint_dry_temperature"
-               android:inputType="text|numberDecimal" />
-    
-    	    <EditText
-    	        android:id="@+id/edit_wet_temperature"
-    	        android:layout_width="match_parent"
-    	        android:layout_height="wrap_content"
-    	        android:hint="@string/hint_wet_temperature"
-    	        android:inputType="text|numberDecimal" />
-    
-    		<EditText
-    		    android:id="@+id/edit_stage_time"
-    		    android:layout_width="match_parent"
-    		    android:layout_height="wrap_content"
-    		    android:hint="@string/hint_stage_time"
-    		    android:inputType="text|numberDecimal" />
     		
-    		<EditText
-    		    android:id="@+id/edit_duration_time"
+    		<LinearLayout 
     		    android:layout_width="match_parent"
-    		    android:layout_height="wrap_content"
-    		    android:hint="@string/hint_duration_time"
-    		    android:inputType="text|numberDecimal" />
+    		    android:layout_height="wrap_content" 		   
+          	    android:gravity="center"
+    		    android:orientation="horizontal"  >
+    		    
+    		     <TextView
+    		        android:layout_width="0dp"
+    		        android:layout_weight="1"
+                  	android:layout_height="wrap_content"
+                  	android:gravity="center"
+                    android:text="@string/hint_dry_temperature" />
+    		    
+    		    <EditText
+               		android:id="@+id/edit_dry_temperature"
+              		android:layout_width="0dp"
+              		android:layout_weight="1"
+              		
+               		android:layout_height="wrap_content"
+               		android:hint="@string/hint_dry_temperature"
+               		android:inputType="text|numberDecimal" />
+    		    
+    		</LinearLayout>
+           
+    		<LinearLayout 
+    		    android:layout_width="match_parent"
+    		    android:layout_height="wrap_content" 		   
+          	    android:gravity="center"
+    		    android:orientation="horizontal">
+    		    
+    		    
+    		    <TextView
+    		        android:layout_width="0dp"
+    		        android:layout_weight="1"
+    		        android:gravity="center"
+                  	android:layout_height="wrap_content"
+                    android:text="@string/hint_wet_temperature" />
+    		    
+    		     <EditText
+    	        	android:id="@+id/edit_wet_temperature"
+    	        	android:layout_width="0dp"
+              		android:layout_weight="1"
+               		android:layout_height="wrap_content"
+    	        	android:hint="@string/hint_wet_temperature"
+    	        	android:inputType="text|numberDecimal" />
+    		</LinearLayout>
+    	   
+    		<LinearLayout 
+    		    android:layout_width="match_parent"
+    		    android:layout_height="wrap_content" 		   
+          	    android:gravity="center"
+    		    android:orientation="horizontal" >
+    		     
+    		    <TextView
+    		        android:layout_width="0dp"
+    		        android:layout_weight="1"
+    		        android:gravity="center"
+                  	android:layout_height="wrap_content"
+                  	android:text="@string/hint_stage_time" />
+    		    <EditText
+    		    	android:id="@+id/edit_stage_time"
+    		    	android:layout_width="0dp"
+              		android:layout_weight="1"
+               		android:layout_height="wrap_content"
+    		    	android:hint="@string/hint_stage_time"
+    		    	android:inputType="text|numberDecimal" />
+    		    
+    		     <ImageView android:id="@+id/id_button_goto_stage"
+    		        android:layout_width="wrap_content"
+    		        android:layout_height="wrap_content"
+    		        android:contentDescription="进入该阶段"
+    		        android:src="@drawable/ic_action_goto"/>
+    		     
+    		</LinearLayout>
+    		
+    		<LinearLayout 
+    		    android:layout_width="match_parent"
+    		    android:layout_height="wrap_content" 		   
+          	    android:gravity="center"
+    		    android:orientation="horizontal" 
+    		    >
+    		    
+    		    <TextView 
+                  	 android:layout_width="0dp"
+    		         android:layout_weight="1"
+    		         android:gravity="center"
+                  	 android:layout_height="wrap_content"
+                  	 android:text="@string/hint_duration_time"/>
+    		    <EditText
+    		    	android:id="@+id/edit_duration_time"
+    		    	android:layout_width="0dp"
+              		android:layout_weight="1"
+               		android:layout_height="wrap_content"
+    		    	android:hint="@string/hint_duration_time"
+    		    	android:inputType="text|numberDecimal" />
+    		    
+    		    <ImageView android:id="@+id/id_button_goto_duration"
+    		        android:layout_width="wrap_content"
+    		        android:layout_height="wrap_content"
+    		        android:contentDescription="进入该阶段"
+    		        android:src="@drawable/ic_action_goto"/>
+    		</LinearLayout>
+    		
+    		
     		
     		<Button android:id="@+id/id_save_btn" 
     		    android:layout_width="match_parent"
     		    android:layout_height="wrap_content"
     		    android:text="Save"/>
+    </LinearLayout>
+    
+         <com.innotek.handset.utils.CurveLines 
+              android:id="@+id/id_curve"
+       		  android:layout_width="match_parent"
+     		  android:layout_height="0dp"
+     		  android:layout_weight="1"/>
 </LinearLayout>

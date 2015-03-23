@@ -22,15 +22,12 @@ import android.util.Log;
 import com.innotek.handset.entities.CurveParams;
 import com.innotek.handset.entities.PreferRoom;
 import com.innotek.handset.entities.Room;
-import com.innotek.handset.entities.State;
-import com.innotek.handset.entities.Station;
 
 public class DatabaseAdapter {
 	
 	private static final String TAG = "Database Adapter";
 	private static final String DB_NAME = "handset";
 	private static final int DATABASE_VERSION = 3;
-	//private static final String USER_ID = "user_id";
 	
 	private SQLiteDatabase sqlite;
 	private DatabaseHelper dbHelper;
@@ -54,18 +51,7 @@ public class DatabaseAdapter {
 		
 		return user;
 	}
-	
-	//
-	public ContentValues contentValuesForState(State state){
-		ContentValues values = new ContentValues();
 		
-		values.put("id", state.getId());
-		values.put("name", state.getName());
-		values.put("user_id", state.getName());
-		
-		return values;
-	}
-	
 	
 	//ContentValue for prefer room
 	public ContentValues contentValuesForPreferRoom(PreferRoom room){
@@ -73,6 +59,8 @@ public class DatabaseAdapter {
 		
 		values.put("user_id", room.getUserId());
 		values.put("room_no", room.getRoomNo());
+		values.put("station_id", room.getStationId());
+		values.put("room_id", room.getRoomID());
 		values.put("tobacco_no", room.getTobaccoNo());
 		values.put("room_type", room.getRoomType());
 		values.put("fan_type", room.getFanType());
@@ -80,27 +68,20 @@ public class DatabaseAdapter {
 		values.put("person_in_charge", room.getPersonInCharge());
 		values.put("room_user", room.getRoomUser());
 		values.put("phone", room.getPhone());
-		
+		values.put("group_name", room.getGroupName());
+		values.put("ac_state", room.getAcState());
+		values.put("fan_state", room.getFanState());
+		values.put("blower_state", room.getBlowerState());
+		values.put("heating_state", room.getHeatingState());
+		values.put("air_inlet_state", room.getAirState());
+		values.put("kettle_state", room.getKettleState());
+		values.put("other", room.getOther());
+		values.put("created_at", room.getCreatedAt().toString());
+		values.put("room_stage_id", room.getRoomStageId());
 		return values;
 	}
 	
-	/**
-	 * 
-	 * @param state_id
-	 * @param jObject
-	 * @return
-	 */
-	public ContentValues contentValuesForStation(Station station){
-		ContentValues contentValues = new ContentValues();
-	
-		contentValues.put("id", station.getId());
-		contentValues.put("name", station.getName());
-		contentValues.put("latitude", station.getLatitude());
-		contentValues.put("longitude", station.getLongitude());
-		contentValues.put("state_id", station.getState_id());
-		
-		return contentValues;
-	}
+
 	
 	/**
 	 * 
@@ -145,66 +126,30 @@ public class DatabaseAdapter {
 	 * @param jObject
 	 */
 	public void initUserData(Context context, JSONObject jObject){
-//		String userID;
 		open();
-			
 	    insertUser(contentValuesForUser(jObject));
-//		try{
-//			userID = jObject.getString("_id");
-//			//Save states that user managed
-//			JSONArray states = jObject.getJSONArray("states");
-//			int statesLength = states.length();
-//			
-//			if(statesLength > 0){
-//				
-//				for(int i = 0; i < statesLength; i++){
-//		
-//					JSONObject obj = states.getJSONObject(i);
-//					State state = new State(obj.getString("_id"), userID, obj.getString("name"));
-//					
-//					insertState(contentValuesForState(state));
-//					
-//					saveStations(JSONUtils.getStations(state.getId()), userID);
-//				}
-//			}
-//			JSONUtils.getPreferRooms(userID);
-//			
-//		}catch(JSONException e){
-//			e.printStackTrace();
-//		}
-		
 		close();
 	}
 	
-
+	
+	//定时更新用户烤房烘烤数据
 	public void updateDatabase(String user_id){
 		open();
-		//update states
-		ArrayList<State> states = JSONUtils.getStates(user_id);
-		for(int i = 0; i < states.size(); i++){
-			State state = states.get(i);
-			Log.i(TAG, "Updating states");
-			updateState(contentValuesForState(state), state.getId());
-			
-			ArrayList<Station> stations = JSONUtils.getStations(state.getId());
-			for(int j = 0; j < stations.size(); j++){
-				Station station = stations.get(j);
-				Log.i(TAG, "Updating stations");
-				updateStation(contentValuesForStation(station), station.getId());
-				
-				ArrayList<Room> rooms = JSONUtils.getRooms(station.getId(), 
-														  "http://223.4.21.219:8080/stations/" + station.getId() + "/rooms");
-				
-				for(int k = 0; k < rooms.size(); k++){
-					Room room = rooms.get(k);
-					Log.i(TAG, "Updating room");
-					this.insertOrUpdateRoom(room);
+		Cursor cursor = getAllRoomsByUser(user_id);
+		if(cursor != null)
+			do{
+				String roomId = cursor.getString(cursor.getColumnIndex("address"));
+				String result = JSONUtils.getRoomById(roomId);
+				Log.i(TAG, "Result " + result);
+				try{
+					JSONObject jsonObject = new JSONObject(result);
+					JSONObject obj = jsonObject.getJSONObject("room");
+					Room room = JSONUtils.createRoom(obj);
+					insertOrUpdateRoom(room);
+				}catch(JSONException e){
+					e.printStackTrace();
 				}
-			}
-			
-		}
-		
-		
+			}while(cursor.moveToNext());
 		close();
 	}
 	
@@ -212,34 +157,6 @@ public class DatabaseAdapter {
 		return sqlite.update("PREFER_ROOMS", values, "user_id = ? and tobacco_no = ?" , new String[]{userID, tobaccoNo});
 	}
 	
-	/**
-	 * 
-	 * @param state_id
-	 * @param stations
-	 */
-	private void saveStations(ArrayList<Station> stations, String user_id){
-		if(stations != null && !stations.isEmpty()){
-			for(int i = 0; i < stations.size(); i++){
-				insertStation(contentValuesForStation(stations.get(i)));
-				//saveRooms(stations.get(i).getId(), user_id);
-			}
-		}
-	}
-	
-	
-	public void saveRooms(String stationId, String user_id){
-		ArrayList<Room> list = JSONUtils.getRooms(stationId,
-												 "http://223.4.21.219:8080/stations/" + stationId + "/rooms");
-		
-		for(int j =0; j < list.size(); j++){
-			Room room = list.get(j);
-			room.setUser_id(user_id);
-			insertOrUpdateRoom(room);
-			long curveId = insertCurve(contentValuesForCurve(room));
-			saveCurveParams(curveId, room);
-			
-		}
-	}
 	
 	public void saveCurveParams(long curveId, Room room){
 
@@ -261,7 +178,19 @@ public class DatabaseAdapter {
 		}
 	}
 	
-	
+	public Cursor getCurveParamsByRoomId(String id){
+		Cursor cursor = sqlite.rawQuery("select curVE_PARAMS.dry_value," +
+										"curvE_PARAMS.wet_value," +
+										"curVE_PARAMS.stage," +
+										"curVE_PARAMS.curve_id, " +
+										"curVE_PARAMS.stage_time," +
+										"curVE_PARAMS.duration_time " +
+										"from curvE_PARAMS, curVES, rooms where rooms.id = curveS.room_id and rooms.id =? ;",
+										new String[]{id});
+		if(cursor.moveToFirst())
+			return cursor;
+		return null;
+	}
 	
 	/**
 	 * 
@@ -271,7 +200,8 @@ public class DatabaseAdapter {
 	public boolean isUserExist(String user_id){
 		boolean exist = false;
 		Cursor cursor = sqlite.query(true, "USERS", null,  
-			       "id = ?", new String[]{user_id}, null, null, null, null, null);
+			       					"id = ?", new String[]{user_id},
+			       					 null, null, null, null, null);
 	
 		exist = cursor.moveToFirst();
 		
@@ -287,42 +217,20 @@ public class DatabaseAdapter {
 		return cursor;
 	}
 	
-	public Cursor getStates(){
-		Cursor cursor = sqlite.query(true, "STATES", new String[]{"id", "name"},  
-				       null, null, null, null, null, null, null);
-		
-		cursor.moveToFirst();
-		return cursor;
-	}
-	
-	
-	public Cursor getStationsByState(String state_id){
-		Cursor cursor = sqlite.query(true, "STATIONS", null,  
-			       "state_id = ?", new String[]{state_id}, null, null, null, null, null);
-		
-		cursor.moveToFirst();
-		return cursor;
-	}
-	
-	public Cursor getRoomsByStation(String stationId){
-		Cursor cursor = sqlite.query(true, "ROOMS", null, null, null, null, null, null, null, null);
-		
-		cursor.moveToFirst();
-		return cursor;
-	}
 	
 	public Cursor getRoomById(String id){
 		Cursor cursor = sqlite.query(true, "ROOMS", null, "id=?", new String[]{id}, null, null, null, null, null);
 		
-		cursor.moveToFirst();
-		return cursor;
+		if(cursor.moveToFirst())
+			return cursor;
+		return null;
 	}
 	
 	public Cursor getPreferRoomsByUser(String user_id){
-//		Cursor cursor = sqlite.query(true, "ROOMS", null, "user_id = ?", new String[]{user_id}, null, null, null, null, null);
-//		cursor.moveToFirst();
+
 		Cursor cursor = sqlite.rawQuery("select * from PREFER_ROOMS, ROOMS where PREFER_ROOMS.room_id = ROOMS.address " +
-				"and PREFER_ROOMS.user_id = ? ;", new String[]{user_id});
+										"and PREFER_ROOMS.user_id = ? ;",
+										new String[]{user_id});
 		if(cursor.moveToFirst())
 			return cursor;
 		return cursor;
@@ -330,21 +238,28 @@ public class DatabaseAdapter {
 	
 	public Cursor getAllRoomsByUser(String user_id){
 		Cursor cursor = sqlite.query(true, "ROOMS", null, "user_id = ?", new String[]{user_id}, null, null, null, null, null);
-		cursor.moveToFirst();
-		return cursor;
-	}
-	
-	public Cursor getCurveParamsByStageAndCurve(int stage, long curve_id){
-		Log.i(TAG, "stage is:" + stage + " and curve_id is " + curve_id);
-		Cursor cursor = sqlite.query(true, "CURVE_PARAMS", null,  "stage_no = "+ stage +" and curve_id = " + curve_id, null, null, null, null, null, null);
 		if(cursor.moveToFirst())
 			return cursor;
 		return null;
 	}
 	
+	
+	public Cursor getCurveParamsByStageAndCurve(int stage, long curve_id){
+		Log.i(TAG, "stage is:" + stage + " and curve_id is " + curve_id);
+		Cursor cursor = sqlite.query(true, "CURVE_PARAMS", null, 
+									 "stage_no = "+ stage +" and curve_id = " + curve_id, 
+									 null, null, null, null, null, null);
+		if(cursor.moveToFirst())
+			return cursor;
+		return null;
+	}
+	
+	
 	public Cursor getCurveParamsByCurve(long curve_id){
 
-		Cursor cursor = sqlite.query(true, "CURVE_PARAMS", null,  "curve_id = " + curve_id, null, null, null, null, null, null);
+		Cursor cursor = sqlite.query(true, "CURVE_PARAMS", null, 
+									"curve_id = " + curve_id, null,
+									null, null, null, null, null);
 		if(cursor.moveToFirst())
 			return cursor;
 		return null;
@@ -366,9 +281,10 @@ public class DatabaseAdapter {
 	}
 	
 	//Get all prefer rooms that created by user
-	public Cursor getPreferRooms(String userId){
-		Log.i(TAG, "userId is " + userId);
-		Cursor cursor = sqlite.query(true, "PREFER_ROOMS", null, "user_id = ?", new String[]{userId},
+	public Cursor getPreferRooms(String userId, long stationId){
+		Cursor cursor = sqlite.query(true, "PREFER_ROOMS", null, 
+									 "user_id = ? and room_id is not null and station_id = " + 
+									stationId, new String[]{userId},
 				null, null, null, null, null);
 		if(cursor.moveToFirst())
 			return cursor;
@@ -385,20 +301,38 @@ public class DatabaseAdapter {
 		return null;
 	}
 	
+	public Cursor getFreshTobaccoByPreferId(long preferRoomId){
+		Cursor cursor = sqlite.query(true, "NEW_TOBACCO", null, "prefer_room_id = " + preferRoomId, null,
+				null, null, null, null, null);
+		if(cursor.moveToFirst())
+			return cursor;
+		return null;
+	}
+	
 	//Save user
 	public long insertUser(ContentValues user){
 		return sqlite.insert("USERS", null, user);
 	}
 	
-	//Save states
-	public long insertState(ContentValues state){
-		return sqlite.insert("STATES", null, state);
+//	//Save states
+//	public long insertState(ContentValues state){
+//		return sqlite.insert("STATES", null, state);
+//	}
+//	
+//	//Save stations
+//	public long insertStation(ContentValues station){
+//		return sqlite.insert("STATIONS", null, station);
+//	}
+	
+	
+	public long findPreferRoomByUserAndAddress(String userId, String address){
+		Cursor c = sqlite.rawQuery("select * from PREFER_ROOMS where user_id =? and room_id =?", new String[]{userId, address});
+		if(c.moveToFirst())
+			return c.getLong(c.getColumnIndex("_id"));
+		return 0;
 	}
 	
-	//Save stations
-	public long insertStation(ContentValues station){
-		return sqlite.insert("STATIONS", null, station);
-	}
+	
 	
 	//Save prefer room
 	public long insertOrUpdatePreferRoom(ContentValues room){
@@ -406,20 +340,85 @@ public class DatabaseAdapter {
 		Cursor c = sqlite.query(true, "PREFER_ROOMS", null, "tobacco_no = ?", 
 				new String[]{tobaccoNo}, null, null, null, null, null);
 		if(c.moveToFirst()){
-			return sqlite.update("PREFER_ROOMS", room, "tobaccoNo = ?", new String[]{tobaccoNo});
+			return sqlite.update("PREFER_ROOMS", room, "tobacco_no = ?", new String[]{tobaccoNo});
 		}
 		return sqlite.insert("PREFER_ROOMS", null, room);
 	}
 	
-	
-	//Updates
-	public long updateState(ContentValues state, String state_id){
-		return sqlite.update("STATES", state, "id= ? ", new String[]{state_id});
+	public long insertPreferRoom(ContentValues preferRoom){
+		
+		String userId = preferRoom.getAsString("user_id");
+		String tobaccoNo = preferRoom.getAsString("tobacco_no");
+		
+		Cursor c = sqlite.rawQuery("select * from prefer_rooms where tobacco_no =?;", new String[]{tobaccoNo});
+		if(c.moveToFirst()){
+			
+			return sqlite.update("PREFER_ROOMS", preferRoom, "user_id = ? and tobacco_no = ?", new String[]{userId, tobaccoNo});
+			
+			
+		}else{
+			return sqlite.insert("PREFER_ROOMS", null, preferRoom);
+		}		
+		
+		
 	}
 	
-	public long updateStation(ContentValues station, String station_id){
-		return sqlite.update("STATIONS", station, "id = ?",	new String[]{station_id});
+ 	public int updatePreferRoom(ContentValues preferRoom){
+		String tobaccoNo = preferRoom.getAsString("tobacco_no");
+		Cursor c = sqlite.query(true, "PREFER_ROOMS", null, "tobacco_no = ?", 
+				new String[]{tobaccoNo}, null, null, null, null, null);
+		if(c.moveToFirst()){
+			return sqlite.update("PREFER_ROOMS", preferRoom, "tobacco_no = ?", new String[]{tobaccoNo});
+		}
+		return 0;
 	}
+	
+	
+	
+	public Cursor findStations(){
+		Cursor c = sqlite.rawQuery("select * from STATIONS", null);
+		if(c.moveToFirst())
+			return c;
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	//更新烤房阶段
+	public int updatePreferRoom(ContentValues values, long roomId){
+		return sqlite.update("PREFER_ROOMS", values, "_id = " + roomId, null);
+	}
+	
+	//保存编烟管理
+	public long savePacking(ContentValues values){
+		return sqlite.insert("PACKINGS", null, values);
+	}
+	
+	public Cursor findDryTobacco(long preferId){
+		Cursor cursor = sqlite.rawQuery("select * from AFTER_BAKING where prefer_room_id = " + preferId, null);
+		if(cursor.moveToFirst())
+			return cursor;
+		return null;
+	}
+	
+	public Cursor findPacking(long preferId){
+		Cursor cursor = sqlite.rawQuery("select * from PACKINGS where prefer_room_id = " + preferId	, null);
+		if(cursor.moveToFirst())
+			return cursor;
+		return null;
+	}
+	
+//	//Updates
+//	public long updateState(ContentValues state, String state_id){
+//		return sqlite.update("STATES", state, "id= ? ", new String[]{state_id});
+//	}
+//	
+//	public long updateStation(ContentValues station, String station_id){
+//		return sqlite.update("STATIONS", station, "id = ?",	new String[]{station_id});
+//	}
 	
 	
 	//Save or update room
@@ -459,15 +458,7 @@ public class DatabaseAdapter {
 			}
 	}
 	
-	
-	public void updateRoom(Room room){
-		ContentValues contentValues = new ContentValues();
-		int value = room.isPrefer()?1:0;
-		contentValues.put("is_prefer", value);
-		sqlite.update("ROOMS", contentValues, "id = ?" ,new String[]{ room.getId()} );
 		
-	}
-	
 	//Save Curve
 	public long insertCurve(ContentValues curve){
 		return sqlite.insert("CURVES", null, curve);
@@ -511,20 +502,29 @@ public class DatabaseAdapter {
 		return sqlite.delete("ROOMS", null, null) > 0;
 	}
 	
+	//鲜烟管理
+	public long saveNewTobacco(ContentValues values){
+		long preferId = values.getAsLong("prefer_room_id");
+		Cursor cursor = sqlite.rawQuery("select * from NEW_TOBACCO where prefer_room_id =" + preferId, null);
+		if(cursor.moveToFirst()){
+			return sqlite.update("NEW_TOBACCO", values, "prefer_room_id = " + preferId, null);
+		}else
+			return sqlite.insert("NEW_TOBACCO", null, values);
+	}
+	
+	//烘烤后管理
+	public long saveDryTobacco(ContentValues values){
+		long preferId = values.getAsLong("prefer_room_id");
+		Cursor cursor = sqlite.rawQuery("select * from AFTER_BAKING where prefer_room_id = " + preferId, null);
+		if(cursor.moveToFirst())
+			return sqlite.update("AFTER_BAKING", values, "prefer_room_id = " + preferId, null);
+		else
+			return sqlite.insert("AFTER_BAKING", null, values);
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	// Database helper init methods
 	public static void resetDatabase(Context context){
 		try{
 			String path = "/data/data/" + context.getPackageName() + "/databases";

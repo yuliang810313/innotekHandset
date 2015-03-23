@@ -13,21 +13,21 @@ import com.innotek.handset.fragments.PreferListFragment;
 
 
 public class PreferListActivity extends BaseActivity {
+	private long stationId;
+	
 	@Override
 	protected Fragment createFragment() {
-		return new PreferListFragment();
+		stationId = getIntent().getExtras().getLong("STATION_ID");
+		return PreferListFragment.newInstance(stationId);
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
 		setTitle("ÎÒµÄ¿¾·¿");
-		setContentView(R.layout.container);
-		
+		super.onCreate(savedInstanceState);
+				
 		ActionBar actionBar = getActionBar();
 	    actionBar.setDisplayHomeAsUpEnabled(true);
-
 	}
 	
 	@Override
@@ -49,9 +49,10 @@ public class PreferListActivity extends BaseActivity {
 	         case R.id.action_add_item:
 	                // Hide the "empty" view since there is now at least one item in the list.
 	               // findViewById(android.R.id.empty).setVisibility(View.GONE);
-	                Intent intent = new Intent(this, NewRoomActivity.class);
+	                Intent intent = new Intent(this, RoomManageActivity.class);
 	                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	                this.startActivity(intent);
+	                intent.putExtra("STATION_ID", stationId);
+	                startActivity(intent);
 	                return true;
 	      }
 

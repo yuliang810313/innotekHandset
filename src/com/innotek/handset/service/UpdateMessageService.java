@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.util.Log;
 
 import com.innotek.handset.utils.DatabaseAdapter;
 
@@ -23,10 +22,10 @@ public class UpdateMessageService extends IntentService {
 	protected void onHandleIntent(Intent intent) {	
 		DatabaseAdapter adapter = new DatabaseAdapter(this);
 		
-		SharedPreferences pref = this.getSharedPreferences("PREF_USER", MODE_PRIVATE);
-		Log.i(TAG, pref.getString("USER_ID", null));
+		SharedPreferences pref = getSharedPreferences("PREF_USER", MODE_PRIVATE);
+		
 		adapter.updateDatabase(pref.getString("USER_ID", null));
-		//start(this);
+		start(this);
 	}
 	
 	
@@ -34,7 +33,6 @@ public class UpdateMessageService extends IntentService {
 		Long updateFrequent =  1L * 3000 * 10;		
 		boolean isAutoUpdate = true ;
 	
-		
 		AlarmManager alarmManager  = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 		
 		Intent updateIntent = new Intent(context, UpdateMessageService.class);
@@ -42,11 +40,10 @@ public class UpdateMessageService extends IntentService {
 		
 		if(isAutoUpdate){
 			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME,
-					SystemClock.elapsedRealtime() + updateFrequent, 
+									  SystemClock.elapsedRealtime() + updateFrequent, 
 									  updateFrequent, 
 									  pi);
 			
-			Log.i(TAG, "Updating in backgroud...");
 		}else{
 			alarmManager.cancel(pi);
 			pi.cancel();

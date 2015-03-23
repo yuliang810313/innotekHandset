@@ -35,8 +35,8 @@ public class RoomsGridFragment extends Fragment implements LoaderCallbacks<Curso
 	private TextView mNormalRooms;
 	
 	
-	private String stationId;
-	private String userID;
+	private static String stationId;
+	private static String userID;
 	
 	
 	//Public KEYS
@@ -66,16 +66,15 @@ public class RoomsGridFragment extends Fragment implements LoaderCallbacks<Curso
 		
 		View view = inflater.inflate(R.layout.fragment_rooms, container, false);
 		
-		mAlertRooms = (TextView)view.findViewById(R.id.id_alert_rooms);
-		mNormalRooms = (TextView)view.findViewById(R.id.id_normal_rooms);
+		mAlertRooms = (TextView) view.findViewById(R.id.id_alert_rooms);
+		mNormalRooms = (TextView) view.findViewById(R.id.id_normal_rooms);
 		
-		gridView = (GridView)view.findViewById(R.id.grid_rooms);
-		
+		gridView = (GridView) view.findViewById(R.id.grid_rooms);
 		gridView.setOnItemClickListener(new OnItemClickListener(){
 			
 			 @Override
 			 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				 Room room = (Room)mAdapter.getItem(position);
+				 Room room = (Room) mAdapter.getItem(position);
 		         startMonitor(room);    
 			 }
 		});
@@ -154,6 +153,7 @@ public class RoomsGridFragment extends Fragment implements LoaderCallbacks<Curso
 	
 	public void startMonitor(Room room){
 		  Intent intent = new Intent(getActivity(), MonitorActivity.class);
+		  
           intent.putExtra(ROOM_ID, room.getId());
           intent.putExtra(INFO_TYPE , room.getInfoType());
           intent.putExtra(ROOM_ADDRESS, room.getAddress());
@@ -162,7 +162,6 @@ public class RoomsGridFragment extends Fragment implements LoaderCallbacks<Curso
           intent.putExtra("TOBACCO_NO", room.getTobaccoNo());
           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           
-          Log.i(TAG, "start to monitoring: " + room.getId());
           startActivity(intent);
           
 	}
@@ -239,7 +238,7 @@ public class RoomsGridFragment extends Fragment implements LoaderCallbacks<Curso
 	}
 
 
-	private  class RoomsGridCursorLoader extends SQLiteCursorLoader{
+	private static class RoomsGridCursorLoader extends SQLiteCursorLoader{
 		
 		public RoomsGridCursorLoader(Context context){
 			super(context);

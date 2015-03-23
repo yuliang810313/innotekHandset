@@ -3,6 +3,7 @@ package com.innotek.handset.entities;
 import com.innotek.handset.utils.MessageParser;
 
 public class Room {
+	
 	private String id;
 	private String station_id;
 	private String user_id;
@@ -19,11 +20,10 @@ public class Room {
 	private String stageTime;
 	private float amount;
 	private boolean isPrefer;
-	private int[] data;
 	private int currentStage;
-	
 	private String tobaccoNo;
 	private String roomNo;
+	private int[] data;
 	
 	public int getCurrentStage() {
 		return currentStage;

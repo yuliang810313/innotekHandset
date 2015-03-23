@@ -1,8 +1,12 @@
 package com.innotek.handset.entities;
 
+import java.util.Date;
+
 public class PreferRoom {
 	
 	private long id;
+	private long stationId;
+	
 	private String userId;
 	private String roomNo;
 	private String tobaccoNo;
@@ -14,11 +18,31 @@ public class PreferRoom {
 	private String phone;
 	private String roomID;
 	
+	private String groupName;
+	private int acState;
+	private int fanState;
+	private int blowerState;
+	private int heatingState;
+	private int airState;
+	private String kettleState;
+	private String other;
+	
+	private int roomStage;
+	private Date createdAt;
+	private long roomStageId;
+	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public long getStationId() {
+		return stationId;
+	}
+	public void setStationId(long stationId) {
+		this.stationId = stationId;
 	}
 	public String getUserId() {
 		return userId;
@@ -79,6 +103,72 @@ public class PreferRoom {
 	}
 	public void setRoomID(String roomID) {
 		this.roomID = roomID;
+	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	public int getAcState() {
+		return acState;
+	}
+	public void setAcState(int acState) {
+		this.acState = acState;
+	}
+	public int getFanState() {
+		return fanState;
+	}
+	public void setFanState(int fanState) {
+		this.fanState = fanState;
+	}
+	public int getBlowerState() {
+		return blowerState;
+	}
+	public void setBlowerState(int blowerState) {
+		this.blowerState = blowerState;
+	}
+	public int getHeatingState() {
+		return heatingState;
+	}
+	public void setHeatingState(int heatingState) {
+		this.heatingState = heatingState;
+	}
+	public int getAirState() {
+		return airState;
+	}
+	public void setAirState(int airState) {
+		this.airState = airState;
+	}
+	public String getKettleState() {
+		return kettleState;
+	}
+	public void setKettleState(String kettleState) {
+		this.kettleState = kettleState;
+	}
+	public String getOther() {
+		return other;
+	}
+	public void setOther(String other) {
+		this.other = other;
+	}
+	public int getRoomStage() {
+		return roomStage;
+	}
+	public void setRoomStage(int roomStage) {
+		this.roomStage = roomStage;
+	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public long getRoomStageId() {
+		return roomStageId;
+	}
+	public void setRoomStageId(long roomStageId) {
+		this.roomStageId = roomStageId;
 	}
 	
 	

@@ -25,7 +25,6 @@ import android.util.Log;
 import com.innotek.handset.entities.CurveParams;
 import com.innotek.handset.entities.PreferRoom;
 import com.innotek.handset.entities.Room;
-import com.innotek.handset.entities.State;
 import com.innotek.handset.entities.Station;
 
 
@@ -150,7 +149,7 @@ public class JSONUtils {
 	}
 	
 	public static Room createRoom(JSONObject jObject){
-		//JSONObject jObject = array.getJSONObject(i);
+		
 		Room room = new Room();	
 		try{
 			JSONArray a = jObject.getJSONArray("status");
@@ -178,7 +177,6 @@ public class JSONUtils {
 				room.setDryAct(Float.parseFloat(status[0]));
 				room.setWetAct(Float.parseFloat(status[1]));
 				room.setStatus(Arrays.toString(status));
-				//room.setStation_id(stationId);
 				break;
 			case 2:
 				
@@ -193,7 +191,6 @@ public class JSONUtils {
 				room.setWetTarget(Float.parseFloat(status[1]));
 				room.setAmount(Float.parseFloat(status[4]));
 				room.setStatus(Arrays.toString(status));
-				//room.setStation_id(stationId);
 				break;
 			};
 		}catch(JSONException e){
@@ -238,24 +235,6 @@ public class JSONUtils {
 		return list;
 	}
 	
-	public static ArrayList<State> getStates(String user_id){
-		ArrayList<State> list = new ArrayList<State>();
-		String results = getJSON("http://223.4.21.219:8080/users/" + user_id + "/states");
-		if(results != null){
-			try{
-				JSONObject obj = new JSONObject(results);
-				JSONArray states = obj.getJSONArray("states");
-				for(int i = 0; i < states.length(); i++){
-					JSONObject object = states.getJSONObject(i);
-					State state = new State(object.getString("_id"), user_id, object.getString("name"));
-					list.add(state);
-				}
-			}catch(JSONException e){
-				e.printStackTrace();
-			}
-		}
-		return list;
-	}
 	
 	//获取用户偏好烤房
 	public static ArrayList<PreferRoom> getPreferRooms(String userID){
@@ -296,6 +275,8 @@ public class JSONUtils {
 	public static String getRoomById(String roomID){
 		return JSONUtils.getJSON("http://223.4.21.219:8080/rooms/" + roomID);
 	}
+	
+	
 	
 	private static final String TAG = "JSON_UTIL";
 }

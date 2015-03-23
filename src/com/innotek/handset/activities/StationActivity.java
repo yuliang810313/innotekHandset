@@ -1,26 +1,26 @@
 package com.innotek.handset.activities;
 
-import android.app.Fragment;
-import android.os.Bundle;
-
-import com.innotek.handset.R;
 import com.innotek.handset.fragments.StationFragment;
 
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.os.Bundle;
 
 public class StationActivity extends BaseActivity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setTitle("烟站列表");
-		setContentView(R.layout.container);
+	protected Fragment createFragment() {
+		return StationFragment.newInstance();
 	}
 
 	@Override
-	protected Fragment createFragment() {
-		return new StationFragment();
+	protected void onCreate(Bundle savedInstanceState) {
+		setTitle("我的工场");
+		super.onCreate(savedInstanceState);
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 	}
-
-
 	
+	
+
 }

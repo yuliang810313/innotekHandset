@@ -4,26 +4,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.innotek.handset.R;
+import com.innotek.handset.activities.CurveSettingActivity;
 import com.innotek.handset.entities.Room;
 import com.innotek.handset.utils.CurveLines;
-import com.innotek.handset.utils.DataManager;
 import com.innotek.handset.utils.DatabaseAdapter;
 import com.innotek.handset.utils.JSONUtils;
 
@@ -65,16 +61,19 @@ public class MonitorFragment extends Fragment {
 	private TextView mAlert5;
 	private TextView mAlert6;
 	
-	//private Button mSettingButton;
+	private Button mSettingButton;
 	
 	private Bundle bundle;
 	
 	private long mCurveId;
+	private String mRoomId;
+	
 	private CurveLines curveLines;
 	private DatabaseAdapter dbAdapter;
-	private int currentStageNumber = 0;
 	
-	//private int stageInCurve = 0;
+	private int currentStageNumber = 0 ;
+
+	private boolean visible = true;
 	
 	private static final int ALERT = 0xFFB71C1C;
 	private static final int NORMAL = 0xFF33691E;
@@ -86,22 +85,22 @@ public class MonitorFragment extends Fragment {
 		super.onCreate(savedInstanceState);	
 		bundle = getActivity().getIntent().getExtras();
 		dbAdapter = new DatabaseAdapter(getActivity());
+		
 		new FetchRoomTask().execute();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		View view = inflater.inflate(R.layout.fragment_monitor, container, false);
 		
-		//mSettingButton = (Button)view.findViewById(R.id.btn_curve_setting);
+		mSettingButton = (Button)view.findViewById(R.id.btn_curve_setting);
 		
 		mRoomStatus = (TextView)view.findViewById(R.id.id_room_status);
 		mCurrentStageNumber = (TextView)view.findViewById(R.id.id_stage_no);
 		mCurrentStageTime = (TextView)view.findViewById(R.id.id_room_stage_time);
-		
 		mTotalStageTime = (TextView)view.findViewById(R.id.id_room_total_time);
-		
 		
 		mDryTarget = (TextView)view.findViewById(R.id.id_dry_target);
 		mWetTarget = (TextView)view.findViewById(R.id.id_wet_target);
@@ -121,45 +120,35 @@ public class MonitorFragment extends Fragment {
 		mAlert5 = (TextView)view.findViewById(R.id.id_alert_5);
 		mAlert6 = (TextView)view.findViewById(R.id.id_alert_6);
 		
-		//包装所有警报提示
+		//所有警报提示
 		TextView[] alerts = {mAlert1, mAlert2, mAlert3, mAlert4, mAlert5, mAlert6};
-		
 		
 		mTitle.setText("烤房" + bundle.getString("ROOM_NO"));
 
+		final LinearLayout mLayout = (LinearLayout) view.findViewById(R.id.id_layout_text);
 		
 		curveLines = (CurveLines)view.findViewById(R.id.id_curve);
-
-		curveLines.setOnTouchListener(new View.OnTouchListener() {
+		curveLines.setOnLongClickListener(new View.OnLongClickListener() {
 			
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				
-		        int mCurrX=0;
-		        int mCurrY=0;
-		        
-		        switch(event.getAction()){
-		        	case MotionEvent.ACTION_DOWN:
-		        		break;
-		        	case MotionEvent.ACTION_UP:
-		        		 v.performClick();
-		        		 mCurrX = (int) event.getX();  
-		        	     mCurrY = (int) event.getY();
-		        	     Log.i("Cutom view" ," touch x: " +  mCurrX  + "and y: " + mCurrY);
-		        	     
-		        	     confirmFireMissiles(mCurrX);
-		        	     break;
-		        	     
-		        };
-		         
-		        v.invalidate();
-				return true;
+			public boolean onLongClick(View v) {
+				if(visible){
+					mLayout.setVisibility(View.GONE);
+					
+				}
+				else
+					mLayout.setVisibility(View.VISIBLE);
+
+				visible = !visible;
+				return false;
 			}
 		});
 		
-				
+		
+		mRoomId = bundle.getString("room_id");		
 		dbAdapter.open();
-		Cursor room = dbAdapter.getRoomById(bundle.getString("room_id"));
+		Cursor room = dbAdapter.getRoomById(mRoomId);
+		
 		Cursor curve = dbAdapter.getCurveParamsByRoom(room.getString(room.getColumnIndex("id")));
 		dbAdapter.close();
 		
@@ -191,9 +180,9 @@ public class MonitorFragment extends Fragment {
 			break;
 			
 		case 2:
-			mRoomStatus.setText("正常");
-			mRoomStatus.setTextColor(NORMAL);
-			
+		
+			mRoomStatus.setVisibility(View.GONE);
+			view.findViewById(R.id.id_layout_alert_title).setVisibility(View.GONE);
 			//隐藏所有报警提示信息
 			for(int i = 0; i < alerts.length; i++){
 				alerts[i].setVisibility(View.GONE);
@@ -210,79 +199,41 @@ public class MonitorFragment extends Fragment {
 		mLostAct.setText("失水实际速率: N/A");
 		
 		//设置温湿度控制曲线
-//		mSettingButton.setOnClickListener(new View.OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				setCurveParams(bundle);
-//			}
-//		});
+		mSettingButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				setCurveParams(bundle);
+			}
+		});
 		
 		return view;
 	}
 	
 	
-//	private void setCurveParams(Bundle bundle){
-//		
-//		String midAddress = bundle.getString("midAddress");
-//		String address = bundle.getString("roomAddress");
-//		
-//		Intent intent = new Intent(getActivity(), CurveSettingActivity.class);
-//		intent.putExtra("MID_ADDRESS", midAddress);
-//		intent.putExtra("ROOM_ADDRESS", address);
-//		intent.putExtra("CURVE_ID", curveId);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//		
-//		startActivity(intent);
-//	}
-	
-	private void confirmFireMissiles(int pointX) {
-	    DialogFragment newFragment = new CurveSettingsDialogFragment(detecteStage(pointX));
-	    newFragment.show(getFragmentManager(), "missiles");
+	private void setCurveParams(Bundle bundle){
+		
+		String midAddress = bundle.getString("midAddress");
+		String address = bundle.getString("roomAddress");
+		
+		Intent intent = new Intent(getActivity(), CurveSettingActivity.class);
+		intent.putExtra("MID_ADDRESS", midAddress);
+		intent.putExtra("ROOM_ADDRESS", address);
+		intent.putExtra("CURVE_ID", mCurveId);
+		intent.putExtra("ROOM_ID", mRoomId);
+		intent.putExtra("CURRENT_STAGE", currentStageNumber);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+		startActivity(intent);
 	}
-	
-	
-	public int detecteStage(int x){
-		int currentStage = 0;
-		if( x <= 150 && x >= 0){
-			currentStage = 1;
-		}
-		if( x <= 250 && x > 150){
-			currentStage = 2;
-		}
-		if( x <= 350 && x > 250){
-			currentStage = 3;
-		}
-		if( x <= 450 && x > 350){
-			currentStage = 4;
-		}
-		if( x <= 550 && x > 450){
-			currentStage = 5;
-		}
-		if( x <= 650 && x > 550){
-			currentStage = 6;
-		}
-		if( x <= 750 && x > 560){
-			currentStage = 7;
-		}
-		if( x <= 850 && x > 750){
-			currentStage = 8;
-		}
-		if( x <= 950 && x > 850)
-			currentStage = 9;
-		if( x <= 1050 && x > 950)
-			currentStage = 10;
-		//Toast.makeText(getActivity(), "current stage: " + currentStage, Toast.LENGTH_SHORT).show();
-		return currentStage;
-	}
-	
+		
 	//检索出该自控仪温湿度控制曲线，将值传递到曲线绘制类
 	private void prepareLineDatas(Cursor cursor){
 		
 		int stage = 0;
 		int stageTime = 0;
 		int stageAmountTime = 0;
-		
+	
 		if(cursor != null){
 			int counter = 0;
 			int length = cursor.getCount();
@@ -311,7 +262,7 @@ public class MonitorFragment extends Fragment {
 				
 			}while(cursor.moveToNext());
 		
-			currentStageNumber = stage >> 3;
+			currentStageNumber = stage >> 5;
 			
 			if(currentStageNumber % 2 == 0){
 				stageTime = durationTimes[currentStageNumber / 2];
@@ -320,6 +271,7 @@ public class MonitorFragment extends Fragment {
 			}
 			
 			mCurrentStageTime.setText("阶段时间:" + String.valueOf(stageTime) + "小时");
+			//mCurrentStageNumber.setText("当前阶段:" + String.valueOf(currentStageNumber/2 + 1));
 			mCurrentStageNumber.setText("当前阶段:" + String.valueOf(currentStageNumber + 1));
 			
 			mTotalStageTime.setText("总时间:" + String.valueOf(stageAmountTime) + "小时");
@@ -383,6 +335,28 @@ public class MonitorFragment extends Fragment {
 		
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
 	 private class CurveSettingsDialogFragment extends DialogFragment {
 		 	private int currentStage;
 		 
@@ -481,6 +455,6 @@ public class MonitorFragment extends Fragment {
 	            return builder.create();
 	        }
 	    }
-		
+		*/
 	
 }

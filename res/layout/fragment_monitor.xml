@@ -10,9 +10,11 @@
     android:background="#EEEEEE"
     android:orientation="vertical" >
     
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+    <LinearLayout
+        android:id="@+id/id_layout_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
         android:divider="?android:attr/listDivider"
     	android:showDividers="middle"
         android:orientation="vertical" >
@@ -29,7 +31,7 @@
     	    android:layout_marginTop="5dp"
     	    android:layout_marginBottom="5dp"
     	    android:textStyle="bold"
-    	    android:text="烤房信息"/>
+    	    android:text="烤房状态"/>
     	
     	<LinearLayout 
         	android:layout_width="match_parent"
@@ -44,12 +46,7 @@
            		android:layout_height="wrap_content"
             	android:layout_weight="1"
             	android:orientation="vertical" >
-            	
-           		<TextView 
-           		    android:id="@+id/id_room_status"
-                	android:layout_width="wrap_content"
-                	android:layout_height="wrap_content" 
-                	android:textStyle="bold" />
+
            		
              	<TextView 
              	    android:id="@+id/id_room_stage_time"
@@ -61,18 +58,24 @@
                  	android:layout_width="wrap_content"
                  	android:layout_height="wrap_content" />
              	
+             	 <TextView android:id="@+id/id_dry_target"
+       		        android:layout_width="wrap_content"
+       		        android:layout_height="wrap_content" />
+             	 
+       		    <TextView android:id="@+id/id_wet_target"
+       		        android:layout_width="wrap_content"
+       		        android:layout_height="wrap_content" />
+       		    
+       		    <TextView android:id="@+id/id_lost_speed_target"
+       		        android:layout_width="wrap_content"
+       		        android:layout_height="wrap_content" />
+             	
         	</LinearLayout>
         	<LinearLayout 
            		android:layout_width="0dp"
            		android:layout_height="wrap_content"
             	android:layout_weight="1"
-            	android:layout_gravity="right"
             	android:orientation="vertical">
-             	
-        	     <TextView 
-        	        android:id="@+id/id_time"
-                	android:layout_width="match_parent"
-                	android:layout_height="wrap_content" />
              
              	<TextView 
              	    android:id="@+id/id_stage_no"
@@ -84,19 +87,48 @@
                  	android:layout_width="match_parent"
                  	android:layout_height="wrap_content" />
                 
+                  <TextView android:id="@+id/id_dry_act"
+       		        android:layout_width="wrap_content"
+       		        android:layout_height="wrap_content" />
+                  
+       		    <TextView android:id="@+id/id_wet_act"
+       		        android:layout_width="wrap_content"
+       		        android:layout_height="wrap_content" />
+       		    
+       		    <TextView android:id="@+id/id_lost_speed_act"
+       		        android:layout_width="wrap_content"
+       		        android:layout_height="wrap_content" />
+                
         	</LinearLayout>   
    		 </LinearLayout>
-   		 
-   <TextView android:layout_width="match_parent"
-    	    android:layout_height="wrap_content"
-    	    android:textStyle="bold"
-    	        	    android:layout_marginTop="5dp"
-    	    android:layout_marginBottom="5dp"
-    	    android:text="烤房状态"/>
+
     <LinearLayout 
+        android:id="@+id/id_layout_alert_title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+    	android:layout_marginBottom="5dp" 
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:id="@+id/id_room_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold" /> 
+            
+        <TextView 
+            android:id="@+id/id_fix_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="警报处理"/>
+    </LinearLayout>
+   	
+            
+    <LinearLayout 
+        android:id="@+id/layout_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:baselineAligned="false"
         android:paddingBottom="10dp"
@@ -107,17 +139,7 @@
        		    android:layout_height="wrap_content"
        		    android:layout_weight="1"
        		    android:orientation="vertical" >
-       		    
-       		    <TextView android:id="@+id/id_dry_target"
-       		        android:layout_width="wrap_content"
-       		        android:layout_height="wrap_content" />
-       		    <TextView android:id="@+id/id_wet_target"
-       		        android:layout_width="wrap_content"
-       		        android:layout_height="wrap_content" />
-       		    <TextView android:id="@+id/id_lost_speed_target"
-       		        android:layout_width="wrap_content"
-       		        android:layout_height="wrap_content" />
-       		    
+
        		    <TextView 
 				    android:id="@+id/id_alert_1"
 				    android:layout_width="wrap_content"
@@ -138,16 +160,7 @@
        		    android:layout_gravity="right"
        		    android:orientation="vertical" >
        		    
-       		    <TextView android:id="@+id/id_dry_act"
-       		        android:layout_width="wrap_content"
-       		        android:layout_height="wrap_content" />
-       		    <TextView android:id="@+id/id_wet_act"
-       		        android:layout_width="wrap_content"
-       		        android:layout_height="wrap_content" />
-       		    
-       		    <TextView android:id="@+id/id_lost_speed_act"
-       		        android:layout_width="wrap_content"
-       		        android:layout_height="wrap_content" />
+       		  
        		    
        		    <TextView 
 				    android:id="@+id/id_alert_2"
@@ -173,27 +186,25 @@
     	android:layout_marginBottom="5dp"
     	android:text="烘烤曲线"/>
     
-    <LinearLayout 
+      <Button 
+       		  android:id="@+id/btn_curve_setting"
+       		  android:layout_width="match_parent"
+      		  android:layout_height="wrap_content"
+       		  android:text="@string/curve_setting" /> 
+       		  
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#FFFFFF"
         android:orientation="vertical">
-       		
-        <!--  <Button 
-       		  android:id="@+id/btn_curve_setting"
-       		  android:layout_width="match_parent"
-      		  android:layout_height="wrap_content"
-       		  android:text="@string/curve_setting" /> 
-       		   -->
-
+       		  
          <com.innotek.handset.utils.CurveLines 
               android:id="@+id/id_curve"
        		  android:layout_width="match_parent"
      		  android:layout_height="wrap_content"/>
-         
-
-        
+    
     </LinearLayout>
    
 

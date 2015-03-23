@@ -36,6 +36,9 @@ public class LoginFragment extends Fragment {
 		mUserId= (EditText)view.findViewById(R.id.edit_user_id);
 		mPassword = (EditText)view.findViewById(R.id.edit_password);
 		
+		
+		
+		
 		TextView mVersionText = (TextView)view.findViewById(R.id.id_version);
 		try{
 			Context context = getActivity();
@@ -48,7 +51,9 @@ public class LoginFragment extends Fragment {
 		mLoginButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				login();
+				if(validateInput())
+					login();
+				
 			}
 		});
 		
@@ -61,6 +66,17 @@ public class LoginFragment extends Fragment {
 		return view;
 	}
 	
+	private boolean validateInput(){
+		if(!(mUserId.getText().toString().length() > 0)){
+			mUserId.setError("请填写用户名");
+			return false;
+		}
+		if(!(mPassword.getText().toString().length() >0)){
+			mPassword.setError("请输入密码");
+			return false;
+		}
+		return true;
+	}
 	
 	private void login(){
 		mLoginHint.setText("正在登录...");

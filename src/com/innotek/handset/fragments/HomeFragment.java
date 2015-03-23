@@ -16,7 +16,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.innotek.handset.R;
+import com.innotek.handset.activities.ConsultationActivity;
 import com.innotek.handset.activities.MyRoomsActivity;
+import com.innotek.handset.activities.StationActivity;
+import com.innotek.handset.service.UpdateMessageService;
 import com.innotek.handset.utils.DatabaseAdapter;
 import com.innotek.handset.utils.SQLiteCursorLoader;
 
@@ -27,6 +30,11 @@ public class HomeFragment extends Fragment implements LoaderCallbacks<Cursor>{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Context context = getActivity(); 
+		Intent intent = new Intent(context, UpdateMessageService.class);
+		context.startService(intent);
+		
 		getLoaderManager().initLoader(22, null, this);
 	}
 
@@ -40,13 +48,32 @@ public class HomeFragment extends Fragment implements LoaderCallbacks<Cursor>{
 		
 		mUserFullName = (TextView)view.findViewById(R.id.id_user_title);
 		
+		Button mWorkFlowButton = (Button) view.findViewById(R.id.id_workflow);
+		mWorkFlowButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startNewActivity(StationActivity.class);
+			}
+		});
 		
-		Button mMyRooms = (Button)view.findViewById(R.id.id_my_rooms);
+		Button mRoomMonitor = (Button) view.findViewById(R.id.id_room_monitor);
+		mRoomMonitor.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startNewActivity(MyRoomsActivity.class);
+			}
+		});
+		
+		
+		
+		Button mMyRooms = (Button)view.findViewById(R.id.id_button_zixun);
 		mMyRooms.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				preferRooms(MyRoomsActivity.class);
+				startNewActivity(ConsultationActivity.class);
 			}
 		});
 		
@@ -56,7 +83,7 @@ public class HomeFragment extends Fragment implements LoaderCallbacks<Cursor>{
 	
 
 	//Start new activity
-	private void preferRooms(Class<?> cls){
+	private void startNewActivity(Class<?> cls){
 		Intent intent = new Intent(getActivity(), cls);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		getActivity().startActivity(intent);

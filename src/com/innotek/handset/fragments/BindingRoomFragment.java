@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,13 +40,28 @@ public class BindingRoomFragment extends Fragment{
 	
 	public static final String TAG = "Binding Fragment";
 	
+	//Factory method create BindingRoomFargment
+	public static BindingRoomFragment newInstance(String roomNo, String tobaccoNo, long stationId){
+		Bundle arguments = new Bundle();
+		
+		arguments.putString("ROOM_NO", roomNo);
+		arguments.putString("TOBACCO_NO", tobaccoNo);
+		arguments.putLong("STATION_ID", stationId);
+		
+		BindingRoomFragment fragment = new BindingRoomFragment();
+		fragment.setArguments(arguments);
+		return fragment;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		bundle = getActivity().getIntent().getExtras();
+		
+		bundle = getArguments();
+		
 		dm = new DataManager(getActivity());
 		
-		SharedPreferences sp = this.getActivity().getSharedPreferences("PREF_USER", Context.MODE_PRIVATE);
+		SharedPreferences sp = getActivity().getSharedPreferences("PREF_USER", Context.MODE_PRIVATE);
 		userID = sp.getString("USER_ID", null);
 	}
 
@@ -56,6 +70,7 @@ public class BindingRoomFragment extends Fragment{
 			Bundle savedInstanceState) {
 		
 		View view = inflater.inflate(R.layout.fragment_binding_room, container, false);
+		
 		mRoomNo = (TextView) view.findViewById(R.id.id_room_no);
 		mTobaccoNo = (EditText) view.findViewById(R.id.id_tobacco_no);
 		mRoomID = (EditText) view.findViewById(R.id.id_room_id);
@@ -77,8 +92,6 @@ public class BindingRoomFragment extends Fragment{
 	}
 	
 	private void bindingRoom(){
-		Log.i(TAG, "binding clicked");
-		
 		String roomID = mRoomID.getText().toString();
 		new FetchDevicesStateTask().execute(roomID);			
 	}
@@ -116,7 +129,8 @@ public class BindingRoomFragment extends Fragment{
     private void preferRooms(){
     	Intent intent = new Intent(getActivity(), PreferListActivity.class);
     	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    	this.getActivity().startActivity(intent);
+    	intent.putExtra("STATION_ID", getArguments().getLong("STATION_ID"));
+    	getActivity().startActivity(intent);
     }
     
     private  class FetchDevicesStateTask extends AsyncTask<String, Void, String>{
@@ -158,28 +172,6 @@ public class BindingRoomFragment extends Fragment{
 			}else{
 				mBindingResult.setText("∆•≈‰ ß∞‹£¨◊‘øÿ“«ID¥ÌŒÛ");
 			}
-			
-//			try{
-//				JSONObject object = new JSONObject(result);
-//				JSONObject room = object.getJSONObject("room");
-//				String roomID = room.getString("address");
-//				if(roomID == null){
-//					mBindingResult.setText("∆•≈‰ ß∞‹£¨√ª”–∏√◊‘øÿ“«ID");
-//				}else{
-//					String tobaccoNo = bundle.getString("TOBACCO_NO");
-//					
-//					String bindResult = dm.bindingRoom(userID, roomID, tobaccoNo) > 0 ? "∆•≈‰≥…π¶" : "∆•≈‰ ß∞‹";
-//					mBindingResult.setText(bindResult);
-//					mTobaccoNo.setText("");
-//					mRoomID.setText("");
-//					
-//					preferRooms();
-//				}
-//				
-//			}catch(JSONException e){
-//				e.printStackTrace();
-//				mBindingResult.setText("∂‘≤ª∆£¨∆•≈‰ ß∞‹");
-//			}
 		}
 	}
 }

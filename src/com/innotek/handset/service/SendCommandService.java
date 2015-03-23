@@ -31,7 +31,7 @@ public class SendCommandService extends IntentService {
 				intent.getStringExtra("WETS"));
 		
 		NameValuePair times = new BasicNameValuePair("sTime", 
-				intent.getStringExtra("STAGE_TIMES") + intent.getStringExtra("DURATION_TIMES"));
+				intent.getExtras().getString("TIMES"));
 		
 		NameValuePair midAddress = new BasicNameValuePair("midAddress", 
 				intent.getStringExtra("MID_ADDRESS"));

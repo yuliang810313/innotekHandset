@@ -46,7 +46,7 @@ public class LoginService extends IntentService {
 				//登录成功，将用户管理的烟站信息存储到数据库, 200表示成功登录
 				loginIntent.putExtra(LOGIN_CODE, 200);
 				
-				SharedPreferences pref = this.getSharedPreferences("PREF_USER", MODE_PRIVATE);
+				SharedPreferences pref = getSharedPreferences("PREF_USER", MODE_PRIVATE);
 				String userID = pref.getString("USER_ID", null);
 				
 				DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
@@ -59,13 +59,16 @@ public class LoginService extends IntentService {
 					databaseAdapter.initUserData(this, user);
 				}else{
 					//已经登录的用户是否和当前用户一致,并且数据库里没有该用户记录
-					
+					Log.i(TAG, "初始化用户数据");
+					databaseAdapter.open();
 					if(!user.getString("_id").equals(userID) && !databaseAdapter.isUserExist(user.getString("_id"))){
-						Log.i(TAG, "初始化用户数据");
-						pref.edit().clear().commit();
-						pref.edit().putString("USER_ID", user.getString("_id")).commit();
+						
 						databaseAdapter.initUserData(this, user);
 					}
+
+					databaseAdapter.close();
+					pref.edit().clear().commit();
+					pref.edit().putString("USER_ID", user.getString("_id")).commit();
 				}
 				
 				

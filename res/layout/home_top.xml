@@ -11,5 +11,6 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/login_title"
 	    android:textColor="#FFFFFF"
+	    android:textAppearance="?android:attr/textAppearanceMedium"
 	    android:textStyle="bold"/>	
 </LinearLayout>
