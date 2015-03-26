@@ -76,21 +76,18 @@ public class HomeFragment extends Fragment implements LoaderCallbacks<Cursor>{
 				startNewActivity(ConsultationActivity.class);
 			}
 		});
-		
-			
+	
 		return view;
 	}
 	
 
-	//Start new activity
 	private void startNewActivity(Class<?> cls){
 		Intent intent = new Intent(getActivity(), cls);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		getActivity().startActivity(intent);
 	}
 	
 
-	
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		return new StateListCursorLoader(getActivity());
@@ -128,7 +125,7 @@ public class HomeFragment extends Fragment implements LoaderCallbacks<Cursor>{
 			DatabaseAdapter dbAdapter = new DatabaseAdapter(getContext());
 			dbAdapter.open();
 			
-			SharedPreferences pref = this.getContext().getSharedPreferences("PREF_USER", Context.MODE_PRIVATE);
+			SharedPreferences pref = getContext().getSharedPreferences("PREF_USER", Context.MODE_PRIVATE);
 			String user_id = pref.getString("USER_ID", null);
 			
 			Cursor c =  dbAdapter.getUser(user_id);			

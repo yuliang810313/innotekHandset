@@ -1,104 +1,98 @@
 package com.innotek.handset.utils;
 
+import java.util.HashMap;
+
 import android.database.Cursor;
-import android.util.Log;
 
 public class CommandInformation {
 
-	private String drys = "";
-	private String wets = "";
-	private String sTimes = "";
-	private String dTimes = "";
-	private String midAddress;
-	private String address;
+	private int mInfoType;
+	private String mDryValues = "";
+	private String mWetValues = "";
+	private String mStageTimes = "";
+	private String mDurationTimes = "";
+	private String mMidAddress;
+	private String mAddress;
+	private String mTimeLine;
 	
-	private static final String TAG = "CommandInformation";
-	private String times;
-	
-	
-	
-	public String getTimes() {
-		return times;
-	}
-
-	public void setTimes(String times) {
-		this.times = times;
-	}
+	public static final String TAG = "CommandInformation";
 
 	public CommandInformation(String midAddress, String address){
-		this.midAddress = midAddress;
-		this.address = address;
+		this.mMidAddress = midAddress;
+		this.mAddress = address;
 	}
 	
-	public void createCommandInformation(Cursor c, int stage){
-		times = "";
+	public void createCurveCommand(Cursor c, int infoType){
+		this.mInfoType = infoType;
+		
+		mTimeLine = "";
 		do{
-			drys += c.getFloat(c.getColumnIndex("dry_value")) + ",";
-			wets += c.getFloat(c.getColumnIndex("wet_value")) + ",";
-			dTimes = c.getInt(c.getColumnIndex("duration_time")) + ",";
-			times += dTimes;
+			mDryValues += c.getFloat(c.getColumnIndex("dry_value")) + ",";
+			mWetValues += c.getFloat(c.getColumnIndex("wet_value")) + ",";
+			mDurationTimes = c.getInt(c.getColumnIndex("duration_time")) + ",";
+			mTimeLine += mDurationTimes;
 			
 			if(c.getInt(c.getColumnIndex("stage_time")) != 0){
-				sTimes = c.getInt(c.getColumnIndex("stage_time")) + ",";
-				times += sTimes;
+				mStageTimes = c.getInt(c.getColumnIndex("stage_time")) + ",";
+				mTimeLine += mStageTimes;
 			}
-			
-			
 		}while(c.moveToNext());
-		Log.i(TAG, times);
 	}
-
-	public String getMidAddress() {
-		return midAddress;
-	}
-
-	public void setMidAddress(String midAddress) {
-		this.midAddress = midAddress;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getDrys() {
-		return drys;
-	}
-
-	public void setDrys(String drys) {
-		this.drys = drys;
-	}
-
-	public String getWets() {
-		return wets;
-	}
-
-	public void setWets(String wets) {
-		this.wets = wets;
-	}
-
-	public String getsTimes() {
-		return sTimes;
-	}
-
-	public void setsTimes(String sTimes) {
-		this.sTimes = sTimes;
-	}
-
-	public String getdTimes() {
-		return dTimes;
-	}
-
-	public void setdTimes(String dTimes) {
-		this.dTimes = dTimes;
-	}
-
-
 	
 	
-	
+	public HashMap<Integer, Integer> jumpToSpecStage(int type, int targetValue){
+		HashMap<Integer, Integer> value = new HashMap<Integer, Integer>();
+		value.put(type, targetValue);
+		return value;
+	}
+
+	public int getmInfoType() {
+		return mInfoType;
+	}
+
+	public void setmInfoType(int mInfoType) {
+		this.mInfoType = mInfoType;
+	}
+
+	public String getmDryValues() {
+		return mDryValues;
+	}
+
+	public void setmDryValues(String mDryValues) {
+		this.mDryValues = mDryValues;
+	}
+
+	public String getmWetValues() {
+		return mWetValues;
+	}
+
+	public void setmWetValues(String mWetValues) {
+		this.mWetValues = mWetValues;
+	}
+
+	public String getmMidAddress() {
+		return mMidAddress;
+	}
+
+	public void setmMidAddress(String mMidAddress) {
+		this.mMidAddress = mMidAddress;
+	}
+
+	public String getmAddress() {
+		return mAddress;
+	}
+
+	public void setmAddress(String mAddress) {
+		this.mAddress = mAddress;
+	}
+
+	public String getmTimeLine() {
+		return mTimeLine;
+	}
+
+	public void setmTimeLine(String mTimeLine) {
+		this.mTimeLine = mTimeLine;
+	}
+
 	
 }

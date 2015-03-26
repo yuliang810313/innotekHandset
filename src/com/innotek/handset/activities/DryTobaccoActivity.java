@@ -68,7 +68,7 @@ public class DryTobaccoActivity extends BaseActivity implements OnMenuItemClickL
         	startNewActivity(RoomManageActivity.class);
             return true;
         case R.id.stage_2:
-        	startNewActivity(NewTobaccoActivity.class);
+        	startNewActivity(FreshTobaccoActivity.class);
             return true;
         case R.id.stage_3:
         	startNewActivity(PackingTobaccoActivity.class);

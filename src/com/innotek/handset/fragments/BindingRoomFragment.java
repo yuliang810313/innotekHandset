@@ -135,7 +135,6 @@ public class BindingRoomFragment extends Fragment{
     
     private  class FetchDevicesStateTask extends AsyncTask<String, Void, String>{
 
-		
 		@Override
 		protected String doInBackground(String...params){
 			

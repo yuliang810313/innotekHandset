@@ -37,14 +37,11 @@ public class WorkFlowActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	     switch (item.getItemId()) {
 	         case android.R.id.home:
-	                // Navigate "up" the demo structure to the launchpad activity.
-	                // See http://developer.android.com/design/patterns/navigation.html for more.
 	                NavUtils.navigateUpTo(this, new Intent(this, HomeActivity.class));
 	                return true;
 
 	         case R.id.action_add_item:
-	                // Hide the "empty" view since there is now at least one item in the list.
-	               // findViewById(android.R.id.empty).setVisibility(View.GONE);
+	            
 	                Intent intent = new Intent(this, RoomManageActivity.class);
 	                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	                startActivity(intent);

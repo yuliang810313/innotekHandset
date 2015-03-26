@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:orientation="vertical"
-    android:paddingTop="10dp" >
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+    
+	<LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical" >
 
-     <LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginBottom="10dp"
-	    android:layout_gravity="center"
-	    android:orientation="horizontal">
-	    
-	    <ImageView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:src="@drawable/cam48"/>
-	    
-	</LinearLayout>
+ 		<include layout="@layout/take_photo" />
+ 	
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,6 +70,6 @@
 	    	 android:text="烘烤结束"/>
 	    
      </LinearLayout>
-	 
-
-</LinearLayout>
+	
+	</LinearLayout>
+</ScrollView>

@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ import android.widget.TextView;
 import com.innotek.handset.R;
 import com.innotek.handset.activities.ArbitrateActivity;
 import com.innotek.handset.activities.DryTobaccoActivity;
-import com.innotek.handset.activities.NewTobaccoActivity;
+import com.innotek.handset.activities.FreshTobaccoActivity;
 import com.innotek.handset.activities.PackingTobaccoActivity;
 import com.innotek.handset.activities.RoomManageActivity;
 import com.innotek.handset.activities.SelectCurveActivity;
@@ -69,7 +68,7 @@ public class PreferListFragment extends ListFragment implements LoaderCallbacks<
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		stationId = getArguments().getLong("STATION_ID");
+		stationId = getArguments().getLong("STATION_ID",1);
 		getLoaderManager().initLoader(19, null, this);
 	}
 	
@@ -82,7 +81,7 @@ public class PreferListFragment extends ListFragment implements LoaderCallbacks<
 				
 			case 1:
 				//启动鲜烟管理
-				startNewActivity(NewTobaccoActivity.class);
+				startNewActivity(FreshTobaccoActivity.class);
 				break;
 			case 2:
 				//启动装（编）烟信息

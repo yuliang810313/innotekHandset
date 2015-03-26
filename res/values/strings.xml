@@ -42,6 +42,11 @@
 	<string name="rooms_count_normal">正常状态烤房统计</string>
 	<string name="rooms_count_alert">警报状态烤房统计</string>
 	
+	
+	<!-- Wokflow  -->
+	<string name="take_photo">拍照</string>
+	
+	
 	<!-- Dialog -->
 	<string name="dialog_create_new_baking">确定开启新烘烤流程？</string>
 	

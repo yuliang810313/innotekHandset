@@ -43,8 +43,7 @@
         android:textSize="14sp"
         android:hint="@string/login_user_id"
         android:inputType="number" >
-        
-         <requestFocus />
+     
     </EditText>
     
 	 <EditText
@@ -68,8 +67,7 @@
 	     android:layout_height="wrap_content"
 	     android:layout_marginTop="50dp"
 	     android:text="@string/copyright"
-	     android:textAppearance="?android:attr/textAppearanceSmall"
-	     />
+	     android:textAppearance="?android:attr/textAppearanceSmall" />
 	 
 	  <TextView
         android:id="@+id/id_version"

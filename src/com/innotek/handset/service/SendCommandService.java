@@ -24,33 +24,45 @@ public class SendCommandService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		
-		NameValuePair drys = new BasicNameValuePair("dry",
-				intent.getStringExtra("DRYS"));
-
-		NameValuePair wets = new BasicNameValuePair("wet", 
-				intent.getStringExtra("WETS"));
-		
-		NameValuePair times = new BasicNameValuePair("sTime", 
-				intent.getExtras().getString("TIMES"));
-		
-		NameValuePair midAddress = new BasicNameValuePair("midAddress", 
-				intent.getStringExtra("MID_ADDRESS"));
-		
-		NameValuePair address = new BasicNameValuePair("address", 
-				intent.getStringExtra("ADDRESS"));
-		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		
-		params.add(drys);
-		params.add(wets);
-		params.add(times);
+		int type = intent.getExtras().getInt("INFO_TYPE");
+		
+		NameValuePair infoType = new BasicNameValuePair("infoType", String.valueOf(type));
+		NameValuePair midAddress = new BasicNameValuePair("midAddress", intent.getStringExtra("MID_ADDRESS"));
+		NameValuePair address = new BasicNameValuePair("address", intent.getStringExtra("ADDRESS"));
+		
 		params.add(midAddress);
 		params.add(address);
+		params.add(infoType);
+		
+		switch(type){
+			case 12:
+				NameValuePair drys = new BasicNameValuePair("dry",
+						intent.getStringExtra("DRYS"));
+
+				NameValuePair wets = new BasicNameValuePair("wet", 
+						intent.getStringExtra("WETS"));
+				
+				NameValuePair times = new BasicNameValuePair("sTime", 
+						intent.getExtras().getString("TIMES"));
+				
+				params.add(drys);
+				params.add(wets);
+				params.add(times);
+				
+			break;
+			case 16:
+				
+				NameValuePair jumpTo = new BasicNameValuePair("target", String.valueOf(intent.getExtras().getInt("JUMP_TO")) );
+				params.add(jumpTo);
+				
+			break;
+		}
 		
 		String result = JSONUtils.postJSON(COMMAND_URL, params);
 		Log.i(TAG, result);
 		
-
 	}
 	
 	

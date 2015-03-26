@@ -5,15 +5,15 @@ import android.os.Bundle;
 
 import com.innotek.handset.fragments.PackingTobaccoFragment;
 
-public class PackingTobaccoActivity extends BaseActivityWithMenu{
+public class PackingTobaccoActivity extends BaseWorkflowActivity{
 	
 	
 	@Override
 	protected Fragment createFragment() {
-		long roomId = getIntent().getExtras().getLong("ROOM_ID");
-		long stationId = getIntent().getExtras().getLong("STATION_ID");
-		super.setRoomId(roomId);
-		return PackingTobaccoFragment.newInstance(roomId, stationId);
+//		long roomId = getIntent().getExtras().getLong("ROOM_ID");
+//		long stationId = getIntent().getExtras().getLong("STATION_ID");
+		
+		return PackingTobaccoFragment.newInstance(mPreferRoomId, mStationId);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.innotek.handset.fragments.BindingRoomFragment;
 
-public class BindingRoomActivity extends BaseActivityWithMenu {
+public class BindingRoomActivity extends ActivityWithPopupMenu {
 	
 	private String roomNo;
 	private String tobaccoNo;
@@ -18,7 +18,7 @@ public class BindingRoomActivity extends BaseActivityWithMenu {
 		roomId = getIntent().getExtras().getLong("ROOM_ID");
 		stationId = getIntent().getExtras().getLong("STATION_ID");
 		
-		super.setRoomId(roomId);
+		//super.setRoomId(roomId);
 		return BindingRoomFragment.newInstance(roomNo, tobaccoNo, stationId);
 	}
 		

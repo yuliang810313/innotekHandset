@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.innotek.handset.R;
 import com.innotek.handset.activities.DryTobaccoActivity;
 import com.innotek.handset.activities.EquipmentManageActivity;
-import com.innotek.handset.activities.NewTobaccoActivity;
+import com.innotek.handset.activities.FreshTobaccoActivity;
 import com.innotek.handset.activities.RoomManageActivity;
 import com.innotek.handset.activities.UserManageActivity;
 
@@ -45,7 +45,7 @@ public class WorkFlowFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				startNewActivity(NewTobaccoActivity.class);
+				startNewActivity(FreshTobaccoActivity.class);
 			}
 		});
 		

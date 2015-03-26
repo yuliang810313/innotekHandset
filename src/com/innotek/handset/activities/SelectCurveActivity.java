@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.innotek.handset.fragments.SelectCurveFragment;
 
-public class SelectCurveActivity extends BaseActivityWithMenu{
+public class SelectCurveActivity extends ActivityWithPopupMenu{
 
 	private long roomId;
 	private long stationId;
@@ -15,7 +15,7 @@ public class SelectCurveActivity extends BaseActivityWithMenu{
 		roomId = getIntent().getExtras().getLong("ROOM_ID");
 		stationId = getIntent().getExtras().getLong("STATION_ID");
 		
-		super.setRoomId(roomId);
+		//super.setRoomId(roomId);
 		return SelectCurveFragment.newInstance(roomId, stationId);
 	}
 

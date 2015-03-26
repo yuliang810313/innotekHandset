@@ -9,30 +9,18 @@
         android:orientation="vertical" >
         
         
-         <LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginBottom="10dp"
-	    android:layout_gravity="center"
-	    android:orientation="horizontal">
-	    
-	    <ImageView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:src="@drawable/cam48"/>
-	    
-	</LinearLayout>
+         <include layout="@layout/take_photo" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="分类编烟" />
+    	<TextView
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:text="分类编烟" />
 
   
-      <RadioGroup
-        android:id="@+id/id_group_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+      	<RadioGroup
+        	android:id="@+id/id_group_category"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content" >
 
         <RadioButton
             android:id="@+id/radio0"
@@ -64,7 +52,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         android:layout_marginTop="10dp"
+        android:layout_marginTop="10dp"
         android:text="编(夹)烟量"/>
     
     <RadioGroup
@@ -91,15 +79,14 @@
             android:text="平均一竿/夹重量   10.3Kg(5-10竿/夹平均值)" />
     </RadioGroup>
     
-    
     <EditText
-            android:id="@+id/id_packing_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="装烟量  竿/夹" />
-    
+        android:id="@+id/id_packing_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="装烟量  竿/夹"
+        android:inputType="numberDecimal" />
     
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.innotek.handset.R;
 import com.innotek.handset.activities.BindingRoomActivity;
@@ -23,15 +23,12 @@ import com.innotek.handset.entities.PreferRoom;
 import com.innotek.handset.utils.DataManager;
 import com.innotek.handset.utils.DatabaseAdapter;
 
-public class RoomManageFragment extends BaseFragment {
-	
-	private long preferID;
-	private long stationId;
+public class RoomManageFragment extends BaseWorkflowFragment {
 	
 	private PreferRoom room;
 	private String roomID;
 	
-	private EditText mGroupName;
+	private TextView mGroupName;
 	private EditText mRoomNo;
 	private EditText mTobaccoNo;
 	private EditText mOther;
@@ -76,16 +73,14 @@ public class RoomManageFragment extends BaseFragment {
 	
 	public static final String TAG = "RoomManage";
 	
-	private DatabaseAdapter dbAdapter;
+	//private DatabaseAdapter dbAdapter;
 
-	
-	
-	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		stationId = getArguments().getLong("STATION_ID");
+//		mStationId = getArguments().getLong("STATION_ID");
+//		mPreferRoomId = getArguments().getLong("ROOM_ID");
 	}
 
 	@Override
@@ -94,14 +89,8 @@ public class RoomManageFragment extends BaseFragment {
 		
 		View view = inflater.inflate(R.layout.fragment_room_manage, container, false);
 		
-		
-		
-		
-	    mGroupName = (EditText) view.findViewById(R.id.id_group_name);
-	    
-	  
-	    
-	    
+	    mGroupName = (TextView) view.findViewById(R.id.id_group_name);
+	   
 		mRoomNo = (EditText) view.findViewById(R.id.id_room_no);
 		mTobaccoNo = (EditText) view.findViewById(R.id.id_tobacco_no);
 		mOther = (EditText) view.findViewById(R.id.id_edit_other);
@@ -178,6 +167,7 @@ public class RoomManageFragment extends BaseFragment {
 					mAirState = 1;
 				else if(checkedId == mAirDamage.getId())
 					mAirState = 0;
+
 			}
 		});
 		
@@ -209,17 +199,17 @@ public class RoomManageFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				room = new PreferRoom();
-				room.setStationId(stationId);
+				room.setStationId(mStationId);
 				
-				if(preferID > 0){
-					Log.i(TAG, "roomID is " + roomID);
+				if(mPreferRoomId > 0){
+				
 					room.setRoomID(roomID);
 					room.setRoomStageId(1);
 					savePreferRoom();
 					
 					Intent intent = new Intent(getActivity(), PreferListActivity.class);
-			    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			    	intent.putExtra("STATION_ID", stationId);
+			    	intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			    	intent.putExtra("STATION_ID", mStationId);
 			    	getActivity().startActivity(intent);
 			    	
 				}else{
@@ -231,85 +221,88 @@ public class RoomManageFragment extends BaseFragment {
 			}
 		});
 		
-		
-		preferID = getArguments().getLong("ROOM_ID");
-		
-		//如果preferID大于0，则是在原烤房重新开启烘烤进程
-		if(preferID > 0){
-			dbAdapter = new DatabaseAdapter(getActivity());
-			dbAdapter.open();
-			Cursor cursor = dbAdapter.getPreferRoomById(preferID);
-			dbAdapter.close();
-			
-			do{
-				mGroupName.setText(cursor.getString(cursor.getColumnIndex("group_name")));
-				mRoomNo.setText(cursor.getString(cursor.getColumnIndex("room_no")));
-				mTobaccoNo.setText(cursor.getString(cursor.getColumnIndex("tobacco_no")));
-				roomID = cursor.getString(cursor.getColumnIndex("room_id"));
-				
-				int acValue = cursor.getInt(cursor.getColumnIndex("ac_state"));
-				if(acValue == 1){
-					mAcGroup.check(mAcNormal.getId());
-				}else
-					mAcGroup.check(mAcDamage.getId());
-				
-				int fanValue = cursor.getInt(cursor.getColumnIndex("fan_state"));
-				if(fanValue == 1)
-					mFanGroup.check(mFanNormal.getId());
-				else
-					mFanGroup.check(mFanDamage.getId());
-				
-				int airValue = cursor.getInt(cursor.getColumnIndex("air_inlet_state"));
-				if(airValue == 1)
-					mAirGroup.check(mAirNormal.getId());
-				else
-					mAirGroup.check(mAirDamage.getId());
-				
-				int blowerValue = cursor.getInt(cursor.getColumnIndex("blower_state"));
-				if(blowerValue == 1)
-					mBlowerGroup.check(mBlowerNormal.getId());
-				else
-					mBlowerGroup.check(mBlowerDamage.getId());
-				
-				int heatingState = cursor.getInt(cursor.getColumnIndex("heating_state"));
-				if(heatingState == 1)
-					mHeatingGroup.check(mHeatingNormal.getId());
-				else
-					mHeatingGroup.check(mHeatingDamage.getId());
-				
-				String kettleState = cursor.getString(cursor.getColumnIndex("kettle_state"));
-				if(kettleState.equals("正常")){
-					mKettleGroup.check(mKettleNormal.getId());
-				}else if(kettleState.equals("漏水")){
-					mKettleGroup.check(mKettleDamage.getId());
-				}else if(kettleState.equals("纱干净")){
-					mKettleGroup.check(mKettleClean.getId());
-				}else if(kettleState.equals("纱不净")){
-					mKettleGroup.check(mKettleDirty.getId());
-				}
-				
-			}while(cursor.moveToNext());
-			
-			
-		}else
-		{
-			  if(stationId == 1)
-			    	mGroupName.setText("云田烤烟工场");
-			    else
-			    	mGroupName.setText("夏层铺烤烟工场");
-		}
+		fillForm();
 		
 		return view;
 	}
 	
+	private void fillForm(){
+		//如果preferID大于0，则是在原烤房重新开启烘烤进程
+				if(mPreferRoomId > 0){
+					dbAdapter = new DatabaseAdapter(getActivity());
+					dbAdapter.open();
+					Cursor cursor = dbAdapter.getPreferRoomById(mPreferRoomId);
+					dbAdapter.close();
+					
+					do{
+						mGroupName.setText(cursor.getString(cursor.getColumnIndex("group_name")));
+						mRoomNo.setText(cursor.getString(cursor.getColumnIndex("room_no")));
+						mTobaccoNo.setText(cursor.getString(cursor.getColumnIndex("tobacco_no")));
+						roomID = cursor.getString(cursor.getColumnIndex("room_id"));
+						
+						int acValue = cursor.getInt(cursor.getColumnIndex("ac_state"));
+						if(acValue == 1){
+							mAcGroup.check(mAcNormal.getId());
+						}else
+							mAcGroup.check(mAcDamage.getId());
+						
+						int fanValue = cursor.getInt(cursor.getColumnIndex("fan_state"));
+						if(fanValue == 1)
+							mFanGroup.check(mFanNormal.getId());
+						else
+							mFanGroup.check(mFanDamage.getId());
+						
+						int airValue = cursor.getInt(cursor.getColumnIndex("air_inlet_state"));
+						if(airValue == 1)
+							mAirGroup.check(mAirNormal.getId());
+						else
+							mAirGroup.check(mAirDamage.getId());
+						
+						int blowerValue = cursor.getInt(cursor.getColumnIndex("blower_state"));
+						if(blowerValue == 1)
+							mBlowerGroup.check(mBlowerNormal.getId());
+						else
+							mBlowerGroup.check(mBlowerDamage.getId());
+						
+						int heatingState = cursor.getInt(cursor.getColumnIndex("heating_state"));
+						if(heatingState == 1)
+							mHeatingGroup.check(mHeatingNormal.getId());
+						else
+							mHeatingGroup.check(mHeatingDamage.getId());
+						
+						String kettleState = cursor.getString(cursor.getColumnIndex("kettle_state"));
+						
+						if(kettleState.equals("正常")){
+							mKettleGroup.check(mKettleNormal.getId());
+						}else if(kettleState.equals("漏水")){
+							mKettleGroup.check(mKettleDamage.getId());
+						}else if(kettleState.equals("纱干净")){
+							mKettleGroup.check(mKettleClean.getId());
+						}else if(kettleState.equals("纱不净")){
+							mKettleGroup.check(mKettleDirty.getId());
+						}
+						
+					}while(cursor.moveToNext());
+					
+					
+				}else{
+					  if(mStationId == 1)
+					    	mGroupName.setText("云田烤烟工场");
+					    else
+					    	mGroupName.setText("夏层铺烤烟工场");
+				}
+	}
+	
+	
+	
 	@Override
 	public void startNewActivity(Class<?> cls){
 		Intent intent = new Intent(getActivity(), cls);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.putExtra("ROOM_ID", preferID);
+		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		intent.putExtra("ROOM_ID", mPreferRoomId);
 		intent.putExtra("ROOM_NO", mRoomNo.getText().toString());
 		intent.putExtra("TOBACCO_NO", mTobaccoNo.getText().toString());
-		intent.putExtra("STATION_ID", stationId);
+		intent.putExtra("STATION_ID", mStationId);
 		getActivity().startActivity(intent);
 	}
 	
@@ -319,6 +312,7 @@ public class RoomManageFragment extends BaseFragment {
 		args.putLong("STATION_ID", stationId);
 		RoomManageFragment fragment = new RoomManageFragment();
 		fragment.setArguments(args);
+		
 		return fragment;
 	}
 	

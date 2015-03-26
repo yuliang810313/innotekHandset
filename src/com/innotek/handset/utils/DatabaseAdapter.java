@@ -133,19 +133,22 @@ public class DatabaseAdapter {
 	
 	
 	//定时更新用户烤房烘烤数据
-	public void updateDatabase(String user_id){
+	public void updateDatabase(String userId){
 		open();
-		Cursor cursor = getAllRoomsByUser(user_id);
+		Cursor cursor = getAllRoomsByUser(userId);
 		if(cursor != null)
 			do{
 				String roomId = cursor.getString(cursor.getColumnIndex("address"));
 				String result = JSONUtils.getRoomById(roomId);
-				Log.i(TAG, "Result " + result);
+				
 				try{
 					JSONObject jsonObject = new JSONObject(result);
 					JSONObject obj = jsonObject.getJSONObject("room");
 					Room room = JSONUtils.createRoom(obj);
 					insertOrUpdateRoom(room);
+					
+					//更新专家曲线
+					
 				}catch(JSONException e){
 					e.printStackTrace();
 				}
@@ -304,6 +307,18 @@ public class DatabaseAdapter {
 	public Cursor getFreshTobaccoByPreferId(long preferRoomId){
 		Cursor cursor = sqlite.query(true, "NEW_TOBACCO", null, "prefer_room_id = " + preferRoomId, null,
 				null, null, null, null, null);
+//		Cursor cursor = sqlite.rawQuery("select * from new_TOBACCO t left outer join photoS p on p.prefer_room_id = t.prefer_room_id " +
+//				"where t.prefer_room_id = " + preferRoomId +";",
+//				null);
+		if(cursor.moveToFirst())
+			return cursor;
+		return null;
+	}
+	
+	
+	public Cursor getPhotosByTypeAndPreferRoomId(int type, long preferRoomId){
+		Cursor cursor = sqlite.query(true, "PHOTOS", null, "photo_type = " + type +" and prefer_room_id = " + preferRoomId,
+				null, null, null, null, null, null);
 		if(cursor.moveToFirst())
 			return cursor;
 		return null;
@@ -312,6 +327,11 @@ public class DatabaseAdapter {
 	//Save user
 	public long insertUser(ContentValues user){
 		return sqlite.insert("USERS", null, user);
+	}
+	
+	//Save Photo
+	public long insertPhoto(ContentValues values){
+		return sqlite.insert("PHOTOS", null, values);
 	}
 	
 //	//Save states

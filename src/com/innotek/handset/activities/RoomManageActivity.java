@@ -5,16 +5,12 @@ import android.os.Bundle;
 
 import com.innotek.handset.fragments.RoomManageFragment;
 
-public class RoomManageActivity extends BaseActivityWithMenu {
-	private long roomId;
-	private long stationId;
+public class RoomManageActivity extends BaseWorkflowActivity {
+	
 	@Override
 	protected Fragment createFragment() {
-		roomId = getIntent().getLongExtra("ROOM_ID", 0);
-		stationId = getIntent().getExtras().getLong("STATION_ID");
-		
-		super.setRoomId(roomId);
-		return RoomManageFragment.newInstance(roomId, stationId);
+		initPreferRoomIdAndStationId();
+		return RoomManageFragment.newInstance(mPreferRoomId, mStationId);
 	}
 
 	@Override

@@ -5,14 +5,14 @@ import android.os.Bundle;
 
 import com.innotek.handset.fragments.ArbitrateFragment;
 
-public class ArbitrateActivity extends BaseActivityWithMenu{
+public class ArbitrateActivity extends ActivityWithPopupMenu{
 
 	@Override
 	protected Fragment createFragment() {
 		long roomId = getIntent().getExtras().getLong("ROOM_ID");
 		long stationId = getIntent().getExtras().getLong("STATION_ID");
 		
-		super.setRoomId(roomId);
+		//super.setRoomId(roomId);
 		return ArbitrateFragment.newInstance(roomId, stationId);
 	}
 	
@@ -23,6 +23,7 @@ public class ArbitrateActivity extends BaseActivityWithMenu{
 	protected void onCreate(Bundle savedInstanceState) {
 		setTitle("’˘“È÷Ÿ≤√");
 		super.onCreate(savedInstanceState);
+		
 	}
 
 

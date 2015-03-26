@@ -206,11 +206,11 @@ public class JSONUtils {
 		if(results != null){
 			try{
 				JSONObject object = new JSONObject(results);
-				Log.i(TAG, "object is " + object);
+				
 				JSONObject curve = object.getJSONObject("curve");
 				JSONArray params = curve.getJSONArray("curves");
 				int stage = params.getInt(0);
-				Log.i(TAG, "the curve stage is " + stage);
+				
 				JSONArray drys = params.getJSONArray(1);
 				JSONArray wets = params.getJSONArray(2);
 				JSONArray times = params.getJSONArray(3);
