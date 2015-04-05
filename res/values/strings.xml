@@ -49,11 +49,13 @@
 	
 	<!-- Dialog -->
 	<string name="dialog_create_new_baking">确定开启新烘烤流程？</string>
+	<string name="dialog_fire_jump">确定运行此阶段？</string>
+	
 	
 	<string name="hint_dry_temperature">干球目标温度</string>
 	<string name="hint_wet_temperature">湿球目标温度</string>
-	<string name="hint_stage_time">上升阶段时间</string>
-	<string name="hint_duration_time">恒温持续时间</string>
+	<string name="hint_stage_time">升温时间</string>
+	<string name="hint_duration_time">稳温时间</string>
 	<string name="save_btn">保存</string>
 	<string name="draw_btn">Draw Curve</string>
 	<string name="curve_setting">在线温湿度曲线设置</string>

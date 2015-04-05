@@ -87,7 +87,7 @@ public class PackingTobaccoFragment extends Fragment implements OnClickListener{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
-		mRoomId = this.getArguments().getLong("ROOM_ID");
+		mRoomId = getArguments().getLong("ROOM_ID");
 		stationId = getArguments().getLong("STATION_ID");
 		dm = new DataManager(getActivity());
 		adapter = new DatabaseAdapter(getActivity());
@@ -211,6 +211,7 @@ public class PackingTobaccoFragment extends Fragment implements OnClickListener{
 					dm.savePacking(packing);
 					
 					adapter.open();
+					adapter.updatePreferRoomStage(mRoomId, 3);
 					for(int i = 0; i < photoInfos.length; i++){
 						if(photoInfos[i] != null){
 							ContentValues cv = new ContentValues();

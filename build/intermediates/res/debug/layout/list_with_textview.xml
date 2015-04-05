@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>    
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/id_roomlist_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1B5E20"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:focusable="false"   />
+    
+<!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/layout/list_with_textview.xml -->

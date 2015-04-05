@@ -24,7 +24,7 @@ public class CurveSettingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setTitle("温湿度曲线设置");	
+		setTitle("在线温湿度曲线设置");	
 		
 		setContentView(R.layout.activity_screen_slide);
 		
@@ -34,7 +34,7 @@ public class CurveSettingActivity extends Activity {
 
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(getIntent().getExtras().getInt("CURRENT_STAGE")/2  ) ;    
+        mPager.setCurrentItem(getIntent().getExtras().getInt("CURRENT_STAGE")  ) ;    
        
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -48,15 +48,7 @@ public class CurveSettingActivity extends Activity {
         });
 	}
 	
-	 
-	
-	
-	
-    
-    /**
-     * A simple pager adapter that represents 5 {@link ScreenSlidePageFragment} objects, in
-     * sequence.
-     */
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -69,7 +61,7 @@ public class CurveSettingActivity extends Activity {
 
         @Override
         public int getCount() {
-            return 10;
+            return 19;
         }
     }
 	

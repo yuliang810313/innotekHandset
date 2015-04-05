@@ -9,10 +9,8 @@ public class PackingTobaccoActivity extends BaseWorkflowActivity{
 	
 	
 	@Override
-	protected Fragment createFragment() {
-//		long roomId = getIntent().getExtras().getLong("ROOM_ID");
-//		long stationId = getIntent().getExtras().getLong("STATION_ID");
-		
+	protected Fragment createFragment() {	
+		getPreferRoomIdAndStationId();
 		return PackingTobaccoFragment.newInstance(mPreferRoomId, mStationId);
 	}
 

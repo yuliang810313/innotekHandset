@@ -77,6 +77,7 @@ public class CurveLines extends View {
 				timePoints[j] = stageTimes[i];
 				j++;
 			}
+			
 			return timePoints;
 		}	
 	}
@@ -123,7 +124,11 @@ public class CurveLines extends View {
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		
+		drawContent(canvas);
+	 }
+
+	
+	private void drawContent(Canvas canvas){
 		float[] dryLine = createLines(20, 400);
 		float[] wetLine = createLines(20, 450);
 		
@@ -159,32 +164,22 @@ public class CurveLines extends View {
 		 int[] timeLines = createTimes();
 		 if(timeLines != null){
 			
-		 	for(int i = 0; i < timeLines.length - 1; i++){
+		 	for(int i = 0; i < timeLines.length-1  ; i++){
 		 		float x =  timePositions[i][0];
 		 		float y =  timePositions[i][1];
 		 		
 		 		canvas.drawText(String.valueOf(timeLines[i]), x, y + 25, paint);
 		 	}
 		 	
-		 	if(style != 0)
-		 		canvas.drawRect(timePositions[currentStage *2][0] - dWidth / 2,
-		 				    timePositions[currentStage *2][1] - 200,
-		 				    timePositions[currentStage *2][0] + dWidth / 2, 
-		 				    timePositions[currentStage *2][1] + 50, 
-		 				    rectPaint);
-		 	else
-		 		canvas.drawRect(timePositions[currentStage ][0] - dWidth / 2,
-	 				    timePositions[currentStage ][1] - 200,
-	 				    timePositions[currentStage ][0] + dWidth / 2, 
-	 				    timePositions[currentStage ][1] + 50, 
+		 		canvas.drawRect(timePositions[currentStage][0] - dWidth / 2,
+	 				    timePositions[currentStage][1] - 200,
+	 				    timePositions[currentStage][0] + dWidth / 2, 
+	 				    timePositions[currentStage][1] + 50, 
 	 				    rectPaint);
 		 }
 		 if(style != 0)
 			 drawDelta(canvas);
-		
-		
-	 }
-
+	}
 	/**
 	 * 
 	 * @param paint

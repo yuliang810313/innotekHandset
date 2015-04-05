@@ -258,6 +258,17 @@ public class DatabaseAdapter {
 	}
 	
 	
+	public int getStageTimeByStage(int stage){
+		Cursor cursor;
+		if(stage % 2 == 0)
+			cursor = sqlite.rawQuery("select stage_time time from curve_params where stage_no = " + stage /2, null);
+		else
+			cursor = sqlite.rawQuery("select duration_time time from curve_params where stage_no = " + (stage +1)/2, null);
+		cursor.moveToFirst();
+		return cursor.getInt(cursor.getColumnIndex("time"));
+		
+	}
+	
 	public Cursor getCurveParamsByCurve(long curve_id){
 
 		Cursor cursor = sqlite.query(true, "CURVE_PARAMS", null, 
@@ -333,18 +344,7 @@ public class DatabaseAdapter {
 	public long insertPhoto(ContentValues values){
 		return sqlite.insert("PHOTOS", null, values);
 	}
-	
-//	//Save states
-//	public long insertState(ContentValues state){
-//		return sqlite.insert("STATES", null, state);
-//	}
-//	
-//	//Save stations
-//	public long insertStation(ContentValues station){
-//		return sqlite.insert("STATIONS", null, station);
-//	}
-	
-	
+		
 	public long findPreferRoomByUserAndAddress(String userId, String address){
 		Cursor c = sqlite.rawQuery("select * from PREFER_ROOMS where user_id =? and room_id =?", new String[]{userId, address});
 		if(c.moveToFirst())
@@ -393,7 +393,11 @@ public class DatabaseAdapter {
 		return 0;
 	}
 	
-	
+	public void updatePreferRoomStage(long preferRoomId, int stage){
+		ContentValues values = new ContentValues();
+		values.put("ROOM_STAGE_ID", stage);
+		sqlite.update("PREFER_ROOMS", values, "_id = " + preferRoomId, null);
+	}
 	
 	public Cursor findStations(){
 		Cursor c = sqlite.rawQuery("select * from STATIONS", null);
@@ -403,8 +407,32 @@ public class DatabaseAdapter {
 	}
 	
 	
+	public Cursor getProCurveParams(long breed, long part){
+		Cursor c = sqlite.rawQuery("SELECT * FROM PRO_CURVE where breed_id = " + breed + " and part_id = " + part, null);
+		if(c.moveToFirst()){
+			long proId = c.getLong(c.getColumnIndex("id"));
+			c = sqlite.rawQuery("SELECT * FROM PRO_CURVE_PARAMS where pro_id = " + proId, null);
+			if(c.moveToFirst())
+				return c;
+		}
+			
+		return null;
+	}
+
 	
-	
+	//根据偏好烤房id检索Room
+	public Cursor getRoomByPreferId(long preferId){
+		Cursor cursor = sqlite.rawQuery("SELECT * FROM PREFER_ROOMS WHERE _id = " + preferId, null);
+		if(cursor.moveToFirst()){
+			String address = cursor.getString(cursor.getColumnIndex("room_id"));
+			Cursor c = sqlite.rawQuery("SELECT * FROM ROOMS WHERE address = ?", new String[]{address});
+			if(c.moveToFirst())
+				return c;
+		}
+		return null;
+		
+		
+	}
 	
 	
 	//更新烤房阶段
@@ -430,17 +458,7 @@ public class DatabaseAdapter {
 			return cursor;
 		return null;
 	}
-	
-//	//Updates
-//	public long updateState(ContentValues state, String state_id){
-//		return sqlite.update("STATES", state, "id= ? ", new String[]{state_id});
-//	}
-//	
-//	public long updateStation(ContentValues station, String station_id){
-//		return sqlite.update("STATIONS", station, "id = ?",	new String[]{station_id});
-//	}
-	
-	
+		
 	//Save or update room
 	public void insertOrUpdateRoom(Room room){
 		

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:paddingTop="10dp"
+    android:orientation="vertical" >
+    
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:hint="物资名称" />
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	     android:layout_marginBottom="5dp"
+	    android:orientation="horizontal">
+	    
+	    <EditText android:id="@+id/id_amount"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:hint="数量"/>
+
+	    <ImageButton android:id="@+id/id_datepicker"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:src="@drawable/calendar"/>
+	    
+	</LinearLayout>
+
+	<EditText android:id="@+id/id_user"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	     android:layout_marginBottom="5dp"
+	    android:hint="使用人" />
+	
+	<EditText android:id="@+id/id_equipment" 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	     android:layout_marginBottom="5dp"
+	    android:hint="物资名称" />
+	
+	<EditText android:id="@+id/amount"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="5dp"
+	    android:hint="领用数量"/>
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	     android:layout_marginBottom="5dp"
+	    android:layout_gravity="center">
+	    
+	    <EditText android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:hint="领用日期" />
+	    
+	    <ImageButton android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:src="@drawable/calendar" />
+	    
+	</LinearLayout>
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	     android:layout_marginBottom="5dp"
+	    android:layout_gravity="center">
+	    
+	    
+	    <EditText android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:hint="归还日期" />
+	    
+	    <ImageButton android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:src="@drawable/calendar" />
+	</LinearLayout>
+	<EditText android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	     android:layout_marginBottom="5dp"
+	    android:hint="使用烤房"/>
+	
+	<Button android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	     android:layout_marginBottom="5dp"
+	    android:text="保存"/>
+</LinearLayout>
+<!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/layout/fragment_equipment.xml -->

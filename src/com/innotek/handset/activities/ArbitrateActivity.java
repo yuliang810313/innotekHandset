@@ -5,29 +5,19 @@ import android.os.Bundle;
 
 import com.innotek.handset.fragments.ArbitrateFragment;
 
-public class ArbitrateActivity extends ActivityWithPopupMenu{
+public class ArbitrateActivity extends BaseWorkflowActivity{
 
 	@Override
 	protected Fragment createFragment() {
-		long roomId = getIntent().getExtras().getLong("ROOM_ID");
-		long stationId = getIntent().getExtras().getLong("STATION_ID");
-		
-		//super.setRoomId(roomId);
-		return ArbitrateFragment.newInstance(roomId, stationId);
+		getPreferRoomIdAndStationId();
+		return ArbitrateFragment.newInstance(mPreferRoomId, mStationId);
 	}
 	
-	
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTitle("’˘“È÷Ÿ≤√");
-		super.onCreate(savedInstanceState);
-		
+		super.onCreate(savedInstanceState);		
 	}
-
-
-
-
 
 }

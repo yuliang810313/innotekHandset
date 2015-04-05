@@ -30,9 +30,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.hdhe.nfc.RFIDReader;
+import com.hdhe.nfc.Tools;
+import com.hdhe.nfc.UidEntity;
 import com.innotek.handset.R;
 import com.innotek.handset.activities.PackingTobaccoActivity;
 import com.innotek.handset.activities.ShowPhotoActivity;
@@ -40,9 +42,6 @@ import com.innotek.handset.entities.PhotoInfo;
 import com.innotek.handset.entities.Tobacco;
 import com.innotek.handset.utils.DataManager;
 import com.innotek.handset.utils.DatabaseAdapter;
-import com.innotek.handset.utils.RFIDReader;
-import com.innotek.handset.utils.Tools;
-import com.innotek.handset.utils.UidEntity;
 
 public class FreshTobaccoFragment extends Fragment implements OnClickListener  {
 	
@@ -124,7 +123,7 @@ public class FreshTobaccoFragment extends Fragment implements OnClickListener  {
 			try{
 				Float.parseFloat(ls.get(i).getText().toString());
 			}catch(NumberFormatException e){
-				ls.get(i).setError("请输入正确的数值");
+				ls.get(i).setError("请输入正确数值");
 				return false;
 			}
 			
@@ -202,13 +201,19 @@ public class FreshTobaccoFragment extends Fragment implements OnClickListener  {
 		mImageViewList.add(mImageView4);
 		
 		mUID = (EditText) view.findViewById(R.id.id_uid);
-		
+		//mUID.setText("请刷卡");
 		mReadCard = (TextView) view.findViewById(R.id.id_read_card);
 		mReadCard.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
+				if(readflag){
+					mReadCard.setText("start find card");
+					readflag = false ;
+				}else{
+					mReadCard.setText("stop");
+					readflag = true ;	
+				}
 			}
 		});
 		
@@ -291,6 +296,7 @@ public class FreshTobaccoFragment extends Fragment implements OnClickListener  {
 					dm.saveNewTobacco(mTobacco);
 					
 					dbAdapter.open();
+					dbAdapter.updatePreferRoomStage(mPreferRoomId, 2);
 					for(int i = 0; i < photoInfos.length; i++){
 						if(photoInfos[i] != null){
 							ContentValues cv = new ContentValues();
@@ -385,18 +391,18 @@ public class FreshTobaccoFragment extends Fragment implements OnClickListener  {
 				mGroupQuality.check(R.id.radio11);
 			}
 			
-//			String type = cursor.getString(cursor.getColumnIndex("tobacco_type"));
-//			if(type.equals("正常")){
-//				mGroupType.check(R.id.radio12);
-//			}else if(type.equals("反青")){
-//				mGroupType.check(R.id.radio13);
-//			}else if(type.equals("干旱")){
-//				mGroupType.check(R.id.radio14);
-//			}else if(type.equals("黑暴")){
-//				mGroupType.check(R.id.radio15);
-//			}else if(type.equals("后发")){
-//				mGroupType.check(R.id.radio16);
-//			}
+			String type = cursor.getString(cursor.getColumnIndex("tobacco_type"));
+			if(type.equals("正常")){
+				mGroupType.check(R.id.radio12);
+			}else if(type.equals("反青")){
+				mGroupType.check(R.id.radio13);
+			}else if(type.equals("干旱")){
+				mGroupType.check(R.id.radio14);
+			}else if(type.equals("黑暴")){
+				mGroupType.check(R.id.radio15);
+			}else if(type.equals("后发")){
+				mGroupType.check(R.id.radio16);
+			}
 			
 			String maturity = cursor.getString(cursor.getColumnIndex("maturity"));
 			String[] ms = maturity.split("/");
@@ -558,12 +564,9 @@ public class FreshTobaccoFragment extends Fragment implements OnClickListener  {
 							reflash(identity);
 						}
 					}
-					
-					
 					try {
 						Thread.sleep(50);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

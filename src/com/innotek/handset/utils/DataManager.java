@@ -16,13 +16,15 @@ public class DataManager {
 		adapter = new DatabaseAdapter(context);
 	}
 	
-	public int modifyCurveParams(float dry, float wet, int sTime, int dTime,long curveId, int stageNo){
+	public int modifyCurveParams(float dry, float wet, int time, int timeType,long curveId, int stageNo){
 		ContentValues params = new ContentValues();
 		
 		params.put("dry_value", dry);
 		params.put("wet_value", wet);
-		params.put("duration_time", dTime);
-		params.put("stage_time", sTime);
+		if(timeType == 1)
+		params.put("duration_time", time);
+		else
+		params.put("stage_time", time);
 		
 		adapter.open();
 		int result = adapter.updateCurveParams(params, curveId, stageNo);

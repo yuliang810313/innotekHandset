@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:orientation="vertical" >
+    
+    <EditText android:id="@+id/id_room_no"
+        style="@style/RoomForm"
+        android:hint="@string/room_no" />
+    
+    <EditText android:id="@+id/id_tobacco_no"
+         style="@style/RoomForm"
+        android:hint="@string/tobacco_no" />
+    
+    <EditText android:id="@+id/id_room_type"
+        style="@style/RoomForm"
+        android:hint="@string/room_type" />
+    
+    <EditText android:id="@+id/id_fan_type"
+        style="@style/RoomForm"
+        android:hint="@string/fan_type" />
+    
+    <EditText android:id="@+id/id_heating_equipment"
+        style="@style/RoomForm"
+        android:hint="@string/heating_equipment" />
+    
+    <EditText android:id="@+id/id_person_in_charge"
+        style="@style/RoomForm"
+        android:hint="@string/person_in_charge" />
+    
+    <EditText android:id="@+id/id_room_user"
+        style="@style/RoomForm"
+        android:hint="@string/room_user" />
+    
+    <EditText android:id="@+id/id_phone"
+        style="@style/RoomForm"
+        android:hint="@string/phone" />
+
+  <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <Button android:id="@+id/id_reset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reset_btn"/>
+        
+         
+     	<Button android:id="@+id/id_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save_btn"/>
+        
+    </LinearLayout>
+</LinearLayout>
+<!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/layout/fragment_new_room.xml -->

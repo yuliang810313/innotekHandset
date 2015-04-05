@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.innotek.handset.R;
@@ -38,6 +38,8 @@ public class CurveSettingFragment extends Fragment{
 	private TextView mStageNumber;
 	
 	private Button mSaveButton;
+	private Button mGotoButton;
+	
 	
 	private DatabaseAdapter dbAdapter;
 	
@@ -46,10 +48,14 @@ public class CurveSettingFragment extends Fragment{
 	private String mRoomId;
 	private CurveLines curveLines;
 	private int j;
-	private CommandInformation cf;
 	
 	private String address;
 	private String midAddress;
+	
+	private LinearLayout mLayoutUp;
+	private LinearLayout mLayoutKeep;
+	
+	private int dialogType = 0;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +72,6 @@ public class CurveSettingFragment extends Fragment{
 		midAddress = cursor.getString(cursor.getColumnIndex("midAddress"));
 		dbAdapter.close();
 		
-		cf = new CommandInformation(midAddress, address);
-		
 	}
 
 	
@@ -81,9 +85,18 @@ public class CurveSettingFragment extends Fragment{
 		mDurationTime = (EditText) view.findViewById(R.id.edit_duration_time);
 		mStageTime = (EditText) view.findViewById(R.id.edit_stage_time);
 		
+		mLayoutUp = (LinearLayout) view.findViewById(R.id.id_layout_up);
+		mLayoutKeep = (LinearLayout) view.findViewById(R.id.id_layout_keep);
+		
+		
 		curveLines = (CurveLines) view.findViewById(R.id.id_curve);
 		
-		j = mPageNumber+1;
+		j = mPageNumber + 1;
+		
+		if(j % 2 == 0){
+			mLayoutKeep.setVisibility(View.GONE);
+		}else
+			mLayoutUp.setVisibility(View.GONE);
 		
 		dbAdapter.open();
 		Cursor room = dbAdapter.getRoomById(mRoomId);
@@ -91,7 +104,7 @@ public class CurveSettingFragment extends Fragment{
 		Cursor curve = dbAdapter.getCurveParamsByRoom(room.getString(room.getColumnIndex("id")));
 		
 		dbAdapter.close();
-		curveLines.setCurrentStage(j-1);
+		curveLines.setCurrentStage(j - 1);
 		curveLines.setStyle(1);
 		prepareLineDatas(curve);
 		
@@ -101,6 +114,7 @@ public class CurveSettingFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
+				//dialogType = 0;
 				confirmFireMissiles();
 			}
 		});
@@ -111,52 +125,51 @@ public class CurveSettingFragment extends Fragment{
 		
 		
 		dbAdapter.open();
-		Cursor data =  dbAdapter.getCurveParamsByStageAndCurve(mPageNumber+1, mCurveId);
+		Cursor data;
+		if(j % 2 == 0)
+			data =  dbAdapter.getCurveParamsByStageAndCurve(j/2 + 1 , mCurveId);
+		else
+			data =  dbAdapter.getCurveParamsByStageAndCurve((j + 1)/2, mCurveId);
+		
+		int time = dbAdapter.getStageTimeByStage(j);
+		
 		dbAdapter.close();
 		
 		if(data != null){
 			float dry;
 			float wet;
-			int sTime;
-			int dTime;
+			
 			do{
 				dry = data.getFloat(data.getColumnIndex("dry_value"));
 				wet = data.getFloat(data.getColumnIndex("wet_value"));
-				sTime = data.getInt(data.getColumnIndex("stage_time"));
-				dTime = data.getInt(data.getColumnIndex("duration_time"));
-				
-				
+	
 			}while(data.moveToNext());
+			
 			mDryValue.setText(String.valueOf(dry));
 			mWetValue.setText(String.valueOf(wet));
-			mStageTime.setText(String.valueOf(sTime));
-			mDurationTime.setText(String.valueOf(dTime));
+			
+			if(j % 2 == 0)
+			mStageTime.setText(String.valueOf(time));
+			else
+			mDurationTime.setText(String.valueOf(time));
 		}
 		
-		ImageView mGotoStage = (ImageView) view.findViewById(R.id.id_button_goto_stage);
-		ImageView mGotoDuration = (ImageView) view.findViewById(R.id.id_button_goto_duration);
-		
-		mGotoStage.setOnClickListener(new View.OnClickListener() {
+		mGotoButton = (Button) view.findViewById(R.id.id_goto_btn);
+		mGotoButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				jump((j-1) * 2);
+				dialogType = 1;
+				confirmFireMissiles();
+				//jump(j-1);
 			}
 		});
-		
-		mGotoDuration.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
-			public void onClick(View v) {
-				jump((j-1)*2 + 1);
-			}
-		});
-		
 		return view;
 	}
 	
 	public void jump(int value){
-		Log.i(TAG, "llaldlldl");
+		
 		Intent intent = new Intent(getActivity(), SendCommandService.class);
 		
 		intent.putExtra("JUMP_TO", value);
@@ -169,24 +182,32 @@ public class CurveSettingFragment extends Fragment{
 	}
 	
 	private void saveCurveParams(){
+		
 		float dry = Float.valueOf(mDryValue.getText().toString());
 		float wet = Float.valueOf(mWetValue.getText().toString());
-		int sTime = Integer.valueOf(mStageTime.getText().toString());
-		int dTime = Integer.valueOf(mDurationTime.getText().toString());
+		int time;
+		int timeType;
+		if(j % 2 == 0){
+			time = Integer.valueOf(mStageTime.getText().toString());
+			timeType = 0;
+		}
+		else{
+			time = Integer.valueOf(mDurationTime.getText().toString());
+			timeType = 1;
+		}
 		
 		DataManager curveManager = new DataManager(getActivity());
 		
-		int result = curveManager.modifyCurveParams(dry, wet, sTime, dTime, mCurveId, j);
+		int result = curveManager.modifyCurveParams(dry, wet, time, timeType, mCurveId, j);
 		if(result > 0){
 			//Send curve params
 			
 			dbAdapter.open();
 
-			
 			Cursor curve = dbAdapter.getCurveParamsByCurve(mCurveId);
 			dbAdapter.close();
 			
-			cf = new CommandInformation(midAddress, address);
+			CommandInformation cf = new CommandInformation(midAddress, address);
 			cf.createCurveCommand(curve, 12);
 			
 			Intent intent = new Intent(getActivity(), SendCommandService.class);
@@ -253,8 +274,7 @@ public class CurveSettingFragment extends Fragment{
 					stageTime = stageTimes[(currentStageNumber - 1) / 2];
 				}
 				
-			
-				
+
 				curveLines.setDrys(drys);
 				curveLines.setWets(wets);
 				curveLines.setDurationTimes(durationTimes);
@@ -288,14 +308,19 @@ public class CurveSettingFragment extends Fragment{
     }
 
     private class FireMissilesDialogFragment extends DialogFragment {
+    
+    	
     	@Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.dialog_fire_missiles)
+            if(dialogType == 0){
+            	builder.setMessage(R.string.dialog_fire_missiles)
                    .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
                        public void onClick(DialogInterface dialog, int id) {
-                    	   saveCurveParams();
+                    	   
+                    		   saveCurveParams();
+	   
                        }
                    })
                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -303,6 +328,21 @@ public class CurveSettingFragment extends Fragment{
                            // User cancelled the dialog
                        }
                    });
+            }else if(dialogType == 1){
+            	builder.setMessage(R.string.dialog_fire_jump)
+                .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                 		   jump(j-1);
+                 		   
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+            }
+            
             // Create the AlertDialog object and return it
             return builder.create();
         }

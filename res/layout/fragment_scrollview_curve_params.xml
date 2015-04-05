@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     	android:id="@+id/id_pager_content"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical" >
 
                   
         <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical">
@@ -73,6 +73,7 @@
     		</LinearLayout>
     	   
     		<LinearLayout 
+    		    android:id="@+id/id_layout_up"
     		    android:layout_width="match_parent"
     		    android:layout_height="wrap_content" 		   
           	    android:gravity="center"
@@ -84,6 +85,7 @@
     		        android:gravity="center"
                   	android:layout_height="wrap_content"
                   	android:text="@string/hint_stage_time" />
+    		    
     		    <EditText
     		    	android:id="@+id/edit_stage_time"
     		    	android:layout_width="0dp"
@@ -92,20 +94,20 @@
     		    	android:hint="@string/hint_stage_time"
     		    	android:inputType="text|numberDecimal" />
     		    
-    		     <ImageView android:id="@+id/id_button_goto_stage"
+    	<!-- 	     <ImageView android:id="@+id/id_button_goto_stage"
     		        android:layout_width="wrap_content"
     		        android:layout_height="wrap_content"
     		        android:contentDescription="进入该阶段"
-    		        android:src="@drawable/ic_action_goto"/>
+    		        android:src="@drawable/ic_action_goto"/> -->
     		     
     		</LinearLayout>
     		
     		<LinearLayout 
+    		    android:id="@+id/id_layout_keep"
     		    android:layout_width="match_parent"
     		    android:layout_height="wrap_content" 		   
           	    android:gravity="center"
-    		    android:orientation="horizontal" 
-    		    >
+    		    android:orientation="horizontal" >
     		    
     		    <TextView 
                   	 android:layout_width="0dp"
@@ -121,24 +123,43 @@
     		    	android:hint="@string/hint_duration_time"
     		    	android:inputType="text|numberDecimal" />
     		    
-    		    <ImageView android:id="@+id/id_button_goto_duration"
+    		 <!--    <ImageView android:id="@+id/id_button_goto_duration"
     		        android:layout_width="wrap_content"
     		        android:layout_height="wrap_content"
     		        android:contentDescription="进入该阶段"
-    		        android:src="@drawable/ic_action_goto"/>
+    		        android:src="@drawable/ic_action_goto"/> -->
     		</LinearLayout>
     		
     		
-    		
-    		<Button android:id="@+id/id_save_btn" 
+    		<LinearLayout 
     		    android:layout_width="match_parent"
     		    android:layout_height="wrap_content"
-    		    android:text="Save"/>
-    </LinearLayout>
+    		    android:orientation="horizontal">
+    		    
+    		    <Button android:id="@+id/id_goto_btn" 
+    		    	android:layout_width="0dp"
+    		    	android:layout_height="wrap_content"
+    		 		android:layout_weight="1"
+    		   	 	android:text="运行此阶段"/>
+    		    
+    		    <Button android:id="@+id/id_save_btn" 
+    		    	android:layout_width="0dp"
+    		    	android:layout_height="wrap_content"
+    		    	android:layout_weight="1"
+    		   	 	android:text="保存"/>
+    		    
+    		</LinearLayout>
+
+   		 </LinearLayout>
     
          <com.innotek.handset.utils.CurveLines 
               android:id="@+id/id_curve"
        		  android:layout_width="match_parent"
-     		  android:layout_height="0dp"
-     		  android:layout_weight="1"/>
-</LinearLayout>
+     		  android:layout_height="wrap_content"
+     		  />
+         
+	</LinearLayout>
+    
+    
+
+

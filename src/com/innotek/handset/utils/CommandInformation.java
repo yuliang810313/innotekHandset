@@ -1,7 +1,5 @@
 package com.innotek.handset.utils;
 
-import java.util.HashMap;
-
 import android.database.Cursor;
 
 public class CommandInformation {
@@ -39,12 +37,6 @@ public class CommandInformation {
 		}while(c.moveToNext());
 	}
 	
-	
-	public HashMap<Integer, Integer> jumpToSpecStage(int type, int targetValue){
-		HashMap<Integer, Integer> value = new HashMap<Integer, Integer>();
-		value.put(type, targetValue);
-		return value;
-	}
 
 	public int getmInfoType() {
 		return mInfoType;

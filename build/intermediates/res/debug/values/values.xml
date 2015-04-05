@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/values/styles.xml -->
+    <eat-comment/>
+    <color name="actionbar_background">#01579B</color>
+    <!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/values/ids.xml -->
+    <eat-comment/>
+    <item name="action_flip" type="id"/>
+    <item name="action_next" type="id"/>
+    <item name="id_custom_grid" type="id"/>
+    <!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_add_item">添加烤房</string>
+    <string name="action_finish">Finish</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_next">Next</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">烟叶烘烤监管</string>
+    <string name="binding_room">烤房匹配</string>
+    <string name="cancel">退出</string>
+    <string name="copyright">Copyright 长沙瑞和数码科技</string>
+    <string name="curve_setting">在线温湿度曲线设置</string>
+    <string name="curve_settings_dialog_title">设置曲线参数</string>
+    <string name="dashbord_menu_desc">test</string>
+    <string name="device_id">自控仪ID</string>
+    <string name="dialog_create_new_baking">确定开启新烘烤流程？</string>
+    <string name="dialog_fire_binding">确定绑定?</string>
+    <string name="dialog_fire_missiles">确认保存?</string>
+    <string name="draw_btn">Draw Curve</string>
+    <string name="fan_type">风机型号</string>
+    <string name="fire">确定</string>
+    <string name="group_name">烤房工厂或群名称</string>
+    <string name="heating_equipment">升温设备</string>
+    <string name="hint_dry_temperature">干球目标温度</string>
+    <string name="hint_duration_time">恒温持续时间</string>
+    <string name="hint_stage_time">上升阶段时间</string>
+    <string name="hint_wet_temperature">湿球目标温度</string>
+    <string name="login">登录</string>
+    <string name="login_password">密码</string>
+    <string name="login_title">Innotek 烟叶烘烤监管</string>
+    <string name="login_user_id">用户名</string>
+    <string name="login_welcome">welcome to</string>
+    <string name="message_empty_layout_changes">还未创建烤房.</string>
+    <string name="my_rooms">我的烤房</string>
+    <string name="password">密码*</string>
+    <string name="person_in_charge">负责人</string>
+    <string name="phone">电话</string>
+    <string name="reset_btn">重置</string>
+    <string name="room_no">烤房编号</string>
+    <string name="room_status">"偏温  缺相  过载"</string>
+    <string name="room_type">烤房类型</string>
+    <string name="room_user">使用人</string>
+    <string name="rooms_count_alert">警报状态烤房统计</string>
+    <string name="rooms_count_normal">正常状态烤房统计</string>
+    <string name="save_btn">保存</string>
+    <string name="search_room">烤房查询</string>
+    <string name="tab_curve_list">值预览</string>
+    <string name="tab_curve_view">曲线预览</string>
+    <string name="tab_setting">设置</string>
+    <string name="take_photo">拍照</string>
+    <string name="tobacco_no">烟基编号</string>
+    <string name="user_id">用户名*</string>
+    <!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">        
+        
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/actionbar_background</item>
+    </style>
+    <style name="RoomForm" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+</resources>

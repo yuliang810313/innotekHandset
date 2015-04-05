@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/home_top"  />
+    <include layout="@layout/user_profile"  />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"  
+        android:paddingTop="100dp"
+        android:orientation="vertical" >
+
+        <Button 
+            android:id="@+id/id_workflow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#01579B"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="烘烤业务管理" />
+        
+        <Button 
+            android:id="@+id/id_room_monitor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#01579B"
+            android:layout_marginTop="50dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="烘烤技术监管"  />
+        
+        <Button 
+            android:id="@+id/id_button_zixun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:layout_marginTop="50dp"
+            android:textColor="#01579B"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="烘烤技术咨询"
+            />
+        
+    </LinearLayout>
+    
+        
+   
+   
+</LinearLayout>
+<!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/layout/fragment_home.xml -->

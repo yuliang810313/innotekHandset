@@ -12,29 +12,7 @@
     	android:orientation="vertical" >
    
 	    <include layout="@layout/take_photo" />
-	
-		<LinearLayout 
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_marginBottom="20dp"
-		    android:orientation="horizontal">
-		    
-		    <EditText android:id="@+id/id_uid"
-	    		android:layout_width="0dp"
-	    		android:layout_height="wrap_content" 
-	    		android:layout_weight="1"
-	    		android:editable="false" />
-		    
-		    <TextView android:id="@+id/id_read_card"
-		        android:layout_width="0dp"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1" 
-		        android:gravity="center"
-		        android:text="刷卡"/>
-		    
-		</LinearLayout>    
-	
-	
+	    
 	<TextView 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
@@ -213,7 +191,7 @@
 	<TextView 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:text="鲜烟成熟度"/>
+	    android:text="鲜烟成熟度(适熟，欠熟，过熟)"/>
 	
 	<LinearLayout 
 	    android:layout_width="match_parent"
@@ -226,6 +204,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:inputType="number"
 	        android:hint="适熟烟%"/>
 	    
 	    <EditText
@@ -233,6 +212,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:inputType="number"
 	        android:hint="欠熟烟%"/>
 	    
 	    <EditText 
@@ -240,9 +220,31 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
+	        android:inputType="number"
 	        android:hint="过熟烟%"/>
 	    
 	</LinearLayout>
+			<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginBottom="20dp"
+		    android:orientation="horizontal">
+		    
+		    <EditText android:id="@+id/id_uid"
+	    		android:layout_width="0dp"
+	    		android:layout_height="wrap_content" 
+	    		android:layout_weight="1"
+	    		android:editable="false" />
+		    
+		    <TextView android:id="@+id/id_read_card"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1" 
+		        android:gravity="center"
+		        android:text="刷卡"/>
+		    
+		</LinearLayout>    
+	
 	
 	<Button android:id="@+id/id_button_done"
 	   		 android:layout_width="match_parent"

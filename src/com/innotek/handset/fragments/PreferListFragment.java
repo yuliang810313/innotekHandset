@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class PreferListFragment extends ListFragment implements LoaderCallbacks<
 		
 		View view = inflater.inflate(R.layout.fragment_listview, container, false);
 		mHeader = (TextView) view.findViewById(R.id.id_list_header);
+		
 		if(stationId == 1)
 			mHeader.setText("云田烤烟工场");
 		else
@@ -57,9 +59,9 @@ public class PreferListFragment extends ListFragment implements LoaderCallbacks<
 	}
 
 
-	public static PreferListFragment newInstance(long stationId){
+	public static PreferListFragment newInstance(long station_Id){
 		Bundle args = new Bundle();
-		args.putLong("STATION_ID", stationId);
+		args.putLong("STATION_ID", station_Id);
 		PreferListFragment fragment = new PreferListFragment();
 		fragment.setArguments(args);
 		return fragment;
@@ -92,8 +94,8 @@ public class PreferListFragment extends ListFragment implements LoaderCallbacks<
 				startNewActivity(SelectCurveActivity.class);
 				break;
 			case 4:
-				//startNewActivity()
 				//应该进入烘烤监控阶段，由于测试，直接启动干烟管理
+				//startNewActivity(MonitorActivity.class);
 				startNewActivity(DryTobaccoActivity.class);
 				break;
 			case 5:
@@ -127,6 +129,7 @@ public class PreferListFragment extends ListFragment implements LoaderCallbacks<
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("ROOM_ID", mRoom.getId());
 		intent.putExtra("STATION_ID", stationId);
+		Log.i(TAG, "room id:" + mRoom.getId() + " and station id: " + stationId);
 		getActivity().startActivity(intent);
 	}
 
@@ -237,28 +240,33 @@ public class PreferListFragment extends ListFragment implements LoaderCallbacks<
 			
 			switch(room.getRoomStage()){
 			case 1:
-				mStage.setText("烤房检查");
+				mStage.setText("烤前检查已完毕");
 				break;
 			case 2:
-				mStage.setText("鲜烟管理");
+				mStage.setText("鲜烟管理已完毕");
 				break;
 			case 3:
-				mStage.setText("烘烤中");
+				mStage.setText("编（夹）已完毕");
 				break;
 			case 4:
-				mStage.setText("干烟管理");
+				mStage.setText("曲线选择已完毕");
 				break;
 			case 5:
-				mStage.setText("争议仲裁");
+				mStage.setText("正在烘烤");
 				break;
 				
 			case 6:
-				mStage.setText("烤烟流程完毕");
+				mStage.setText("干烟管理已完毕");
 				break;
 			case 7:
-				mStage.setText("仲裁结束");
+				mStage.setText("正在仲裁");
 				mStage.setTextColor(Color.RED);
+				break;
+			case 8:
+				mStage.setText("烘烤结束");
+				break;
 			}
+			
 			return convertView;
 			
 		}

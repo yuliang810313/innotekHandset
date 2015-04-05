@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+ 	android:gravity="center"
+    android:orientation="vertical" >
+    
+
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="仲裁烤房编号"/>
+    
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="烘烤日期"/>
+        
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="烟农姓名"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="10dp"
+        android:text="烘烤损失情况:  有部分烟叶烤青"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="10dp"
+        android:text="仲裁组成员" />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <TextView android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="烟办"/>
+        
+        <EditText android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="姓名"/>
+        
+         <TextView android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="烟草"/>
+         
+         <EditText android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="姓名"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+        <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <TextView android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="烘烤队"/>
+        
+        <EditText android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="姓名"/>
+        
+         <TextView android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="烟农代表"/>
+         
+         <EditText android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="姓名"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView android:text="仲裁结果"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <TextView android:text="有问题的100斤烟，每斤赔付2.5元，共计250元"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <Button 
+        android:id="@+id/id_button_arbitrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="仲裁结束" />
+        
+   
+</LinearLayout>
+<!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/layout/fragment_arbitration.xml -->

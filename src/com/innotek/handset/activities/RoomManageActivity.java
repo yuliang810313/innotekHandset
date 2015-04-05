@@ -9,7 +9,7 @@ public class RoomManageActivity extends BaseWorkflowActivity {
 	
 	@Override
 	protected Fragment createFragment() {
-		initPreferRoomIdAndStationId();
+		getPreferRoomIdAndStationId();
 		return RoomManageFragment.newInstance(mPreferRoomId, mStationId);
 	}
 

@@ -3,30 +3,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:paddingTop="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:orientation="vertical" >
     
     <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Spinner   
-        	android:id="@+id/id_spinner_breed"  
-        	android:layout_width="0dp"  
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+    	<LinearLayout 
+        	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
-        	android:layout_weight="1"/>
- 	
- 		<Spinner   
-        	android:id="@+id/id_spinner_part"  
-        	android:layout_width="0dp"  
-        	android:layout_height="wrap_content"
-        	android:layout_weight="1"/>
+        	android:orientation="horizontal">
         
-    </LinearLayout>
+        	<TextView android:layout_width="0dp"
+            	android:layout_height="wrap_content"
+            	android:layout_weight="1"
+            	android:text="烟叶品种" />
+        
+        	<TextView android:layout_width="0dp"
+            	android:layout_height="wrap_content"
+            	android:layout_weight="1"
+            	android:text="烟叶部位" />
+        	
+        	<TextView android:layout_width="0dp"
+            	android:layout_height="wrap_content"
+            	android:layout_weight="1"
+            	android:text="" />
+        	        	
+    	</LinearLayout>
+    
+    	<LinearLayout 
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:orientation="horizontal">
+        	
+        	<Spinner   
+        		android:id="@+id/id_spinner_breed"  
+        		android:layout_width="0dp"  
+        		android:layout_height="wrap_content"
+        		android:layout_weight="1"/>
  	
- 	<Button 
- 	    android:id="@+id/id_button_done"
- 	    android:text="确定"
- 	    android:layout_marginTop="30dp"
- 	    android:layout_width="match_parent"
- 	    android:layout_height="wrap_content"/>
+ 			<Spinner   
+        		android:id="@+id/id_spinner_part"  
+        		android:layout_width="0dp"  
+        		android:layout_height="wrap_content"
+        		android:layout_weight="1"/>
+ 			
+ 			<Button 
+ 	    		android:id="@+id/id_select_done"
+ 	    		android:text="选择"
+ 	    		android:layout_weight="1"
+ 	    		android:layout_width="0dp"
+ 	    		android:layout_height="wrap_content"/>
+        
+    	</LinearLayout>
+ 		
+ 			
+ 		<Button 
+ 	    		android:id="@+id/id_button_done"
+ 	    		android:text="确定"
+ 	    
+ 	    		android:layout_width="match_parent"
+ 	    		android:layout_height="wrap_content"/>
+ 		
+ 	</LinearLayout>
+ 		
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+       		  
+         <com.innotek.handset.utils.CurveLines 
+              android:id="@+id/id_curve"
+              
+       		  android:layout_width="match_parent"
+     		  android:layout_height="wrap_content"/>
+    
+    </LinearLayout>
 </LinearLayout>

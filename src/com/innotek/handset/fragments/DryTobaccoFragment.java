@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +30,6 @@ import com.innotek.handset.R;
 import com.innotek.handset.activities.ArbitrateActivity;
 import com.innotek.handset.activities.PreferListActivity;
 import com.innotek.handset.activities.ShowPhotoActivity;
-import com.innotek.handset.activities.WorkFlowActivity;
 import com.innotek.handset.entities.DryTobacco;
 import com.innotek.handset.entities.PhotoInfo;
 import com.innotek.handset.utils.DataManager;
@@ -61,9 +59,7 @@ public class DryTobaccoFragment extends Fragment implements OnClickListener{
 	private String filename;
 	
 	private int count;
-	
-	
-	
+
 	private RadioGroup mGroupQuality;
 	private String mQuality;
 	
@@ -174,7 +170,7 @@ public class DryTobaccoFragment extends Fragment implements OnClickListener{
 				}
 				else{
 					//½áÊøºæ¿¾Á÷³Ì
-					dm.updateRoomStage(preferRoomId, 7);
+					dm.updateRoomStage(preferRoomId, 8);
 					startNewActivity(PreferListActivity.class);
 					cleanTask();
 				}
@@ -198,10 +194,7 @@ public class DryTobaccoFragment extends Fragment implements OnClickListener{
 							cv.put("current_path", currentPath);
 							cv.put("prefer_room_id", preferRoomId);
 							cv.put("photo_type", 3);
-							
-							
-							long k = adapter.insertPhoto(cv);
-							
+	
 						}
 						
 					}

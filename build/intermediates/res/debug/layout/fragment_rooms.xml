@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:showDividers="middle"
+    android:divider="?android:attr/listDivider"
+    android:orientation="vertical" >
+	
+    <include layout="@layout/rooms_count" />
+    
+    <GridView
+        android:id="@+id/grid_rooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="12dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth" />
+   
+</LinearLayout>
+<!-- From: file:/Users/david/Documents/workspace/InnotekHandset/res/layout/fragment_rooms.xml -->
